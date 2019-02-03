@@ -1,0 +1,125 @@
+#setting-error-tgmpa {
+	display: block;
+	clear: both; }
+
+tr[data-slug="slider-revolution"] + .plugin-update-tr,
+.vc_license-activation-notice,
+.rs-update-notice-wrap,
+tr.plugin-update-tr.active#js_composer-update {
+	display: none !important; }
+
+.redux-message.redux-notice,
+[id*="redux_blast_"] {
+	display: none !important; }
+
+#redux-header .rAds {
+	display: none !important;
+	width: 0 !important;
+	height: 0 !important;
+}
+
+/* SP Widgets */
+[id*="sportspress-"] label[for*="-align"],
+[id*="sportspress-"] select[id*="-align"] {
+	display: none; }
+
+/* SP Widget: Event Blocks */
+[id*="sportspress-event-blocks-"] label[for*="-title"],
+[id*="sportspress-event-blocks-"] input[id*="-title"] {
+	display: none; }
+
+/* SP Widget: Event List */
+[id*="sportspress-event-list"] label[for*="-title"],
+[id*="sportspress-event-list"] input[id*="-title"] {
+	display: none; }
+
+/* SP Widget: Player List */
+[id*="sportspress-player-list"] label[for*="-title"],
+[id*="sportspress-player-list"] input[id*="-title"] {
+	display: none; }
+
+/* SP Widget: League Table */
+[id*="sportspress-league-table"] label[for*="-title"],
+[id*="sportspress-league-table"] input[id*="-title"] {
+	display: none; }
+
+/* Redux Theme Options */
+.redux-sidebar .redux-group-menu li a img[src*="sp.png"] {
+	width: 20px;
+	height: auto;
+}
+
+/* SportsPress data table width */
+.sp-data-table-container {
+	overflow-x: auto;
+}
+
+/* SportsPress SVG image size fix */
+.sp-admin-config-table td.icon img[src$=".svg"] {
+	height: auto !important;
+	width: auto !important;
+}
+
+#posts-filter .wp-list-table .type-sp_team .sp_icon #vc_load-inline-editor{
+	display: none !important;
+}
+
+
+/* Redux Framework */
+#alchemists_data-alchemists__color-preset ul.redux-image-select li {
+	display: block !important; }
+
+/* Redux Theme Options */
+.redux-sidebar .redux-group-menu li a img[src*="sp.png"] {
+	width: 20px;
+	height: auto;
+}
+
+/* Basketball fields */
+tr.alchemists-field--basketball-only {
+	display: none;
+}
+.template-basketball tr.alchemists-field--basketball-only {
+	display: table-row;
+}
+
+/* American Football fields */
+tr.alchemists-field--football-only {
+	display: none;
+}
+.template-football tr.alchemists-field--football-only {
+	display: table-row;
+}
+
+/* Soccer fields */
+tr.alchemists-field--soccer-only {
+	display: none;
+}
+.template-soccer tr.alchemists-field--soccer-only {
+	display: table-row;
+}
+
+/* Hide Blog - version 5 for Basketball and Soccer */
+.template-basketball .alchemists-field--blog-style ul.redux-image-select li.redux-image-select:last-child,
+.template-soccer .alchemists-field--blog-style ul.redux-image-select li.redux-image-select:last-child {
+	display: none !important;
+}
+
+/* Hide 1-2 color schemes presets for American Football */
+.template-football .redux-image-select-preset-alchemists__color-preset_1,
+.template-football .redux-image-select-preset-alchemists__color-preset_2 {
+	display: none;
+}
+
+/* Hide 3 color schemes preset for Basketball and Soccer */
+.template-basketball .redux-image-select-preset-alchemists__color-preset_3,
+.template-soccer .redux-image-select-preset-alchemists__color-preset_3 {
+	display: none;
+}
+
+/* Widgets */
+.alchemists-widget-note {
+	font-style: italic;
+	padding: .5em 0;
+	color: #666;
+}

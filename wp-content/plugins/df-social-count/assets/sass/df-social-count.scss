@@ -1,0 +1,635 @@
+/*=============================================
+=            DF Social Count            =
+=============================================*/
+
+
+/*----------  General  ----------*/
+
+
+/**
+ *
+ * Variables
+ *
+ */
+$card-border-color: rgba(255,255,255,.05);
+
+// Defaut Button
+$default-color:        #9a9da2;
+$default-icon-color:   rgba(0,0,0,.05);
+
+// Facebook
+$facebook-color:       #4d6baa;
+$facebook-icon-color:   #43609c;
+
+$facebook-color-layout-columns:       #43609c;
+$facebook-count-color-layout-columns: #4d6baa;
+
+$facebook-color-layout-grid:          #43609c;
+$facebook-color-hover-layout-grid:    #4e6cac;
+$facebook-icon-color-layout-grid:     $facebook-color-hover-layout-grid;
+
+// Github
+$github-color:         #181717;
+$github-icon-color:    rgba(255,255,255,.05);
+
+// Pinterest
+$pinterest-color:      #BD081C;
+$pinterest-icon-color: rgba(0,0,0,.08);
+
+// YouTube
+$youtube-color:        #FF0000;
+$youtube-icon-color:   rgba(0,0,0,.08);
+
+// Vimeo
+$vimeo-color:          #1AB7EA;
+$vimeo-icon-color:     rgba(0,0,0,.08);
+
+// Steam
+$steam-color:          #000;
+$steam-icon-color:     rgba(255,255,255,.08);
+
+// Twitch
+$twitch-color:         #6441A4;
+$twitch-icon-color:    rgba(255,255,255,.05);
+
+// Tumblr
+$tumblr-color:         #36465D;
+$tumblr-icon-color:    rgba(255,255,255,.05);
+
+// Posts
+$posts-color:          $default-color;
+$posts-icon-color:     $default-icon-color;
+
+// Users
+$users-color:          $default-color;
+$users-icon-color:     $default-icon-color;
+
+
+/**
+ *
+ * Mixins
+ *
+ */
+@mixin font-accent( $font-size: 13px ) {
+	font-size: $font-size;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+
+/*----------  Widget  ----------*/
+
+.df-social-count-widget {
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+
+	.card__content {
+		padding: 0;
+	}
+}
+
+.df-social-count--columns {
+	display: flex;
+	justify-content: flex-start;
+	margin-left: -5px;
+	margin-right: -5px;
+	overflow: hidden;
+	flex-wrap: wrap;
+
+	.btn-social-counter {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		padding: 0;
+		text-align: center;
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-bottom: 10px;
+		flex-basis: calc(33.3% - 10px);
+		max-width: calc(33.3% - 10px);
+
+		& + .btn-social-counter {
+			margin-top: 0;
+		}
+	}
+		.btn-social-counter__icon {
+			position: relative;
+			width: 100%;
+			padding: 35px 0 10px 0;
+			background-color: transparent !important;
+		}
+		.btn-social-counter__title {
+			font-size: 10px;
+			padding: 0 12px 10px 12px;
+		}
+		.btn-social-counter__add-icon {
+			position: relative;
+			right: auto;
+			top: 0;
+			margin-top: 0;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 10px;
+		}
+		.btn-social-counter__count {
+			order: 9;
+			padding: 10px 5px;
+			margin-top: auto;
+			background-color: rgba(255,255,255,.1);
+		}
+}
+
+.df-social-count--grid {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	overflow: hidden;
+	margin-bottom: -10px;
+
+	.btn-social-counter {
+		padding: 0;
+		text-align: center;
+		flex-basis: calc(50% - 5px);
+		max-width: calc(50% - 5px);
+		margin-bottom: 10px;
+		text-align: left;
+		padding-left: 46px;
+		padding-top: 20px;
+		padding-right: 38px;
+
+		& + .btn-social-counter {
+			margin-top: 0;
+		}
+
+		.btn-social-counter__icon {
+			background-color: transparent;
+			width: 46px;
+			text-indent: 8px;
+		}
+		.btn-social-counter__title {
+			font-size: 12px;
+			line-height: 1em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.btn-social-counter__count {
+			font-size: 10px;
+			line-height: 1em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.btn-social-counter__add-icon {
+			border: none;
+			width: 34px;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			height: auto;
+			margin: 0;
+			border-radius: 0;
+			background-color: rgba(255,255,255,.1);
+		}
+	}
+}
+
+
+
+/*----------  Social Buttons  ----------*/
+
+.btn-social-counter {
+	display: block;
+	width: 100%;
+	color: #fff;
+	text-transform: uppercase;
+	border: 1px solid $card-border-color;
+	border-radius: 4px;
+	min-height: 65px;
+	position: relative;
+	overflow: hidden;
+	background-clip: padding-box;
+	padding: 20px 60px 18px 86px;
+	transition: all 0.3s ease-in-out;
+	transform: translate3d(0, 0, 0);
+
+	& + & {
+		margin-top: 10px;
+	}
+
+	&:hover {
+		color: #fff;
+	}
+
+	.widget--footer & {
+		border-color: transparent;
+	}
+}
+	.btn-social-counter__icon {
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 68px;
+		background-color: $default-icon-color;
+		text-align: center;
+		font-size: 18px;
+
+		.fa {
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			text-align: center;
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+	.btn-social-counter__title {
+		font-size: 11px;
+		line-height: 1.2em;
+		color: #fff;
+		margin-bottom: 1px;
+		letter-spacing: -0.02em;
+
+		@media (min-width: 992px) {
+			font-size: 13px;
+		}
+
+		@media (min-width: 992px) and (max-width: 1199px) {
+			font-size: 11px;
+		}
+	}
+	.btn-social-counter__count {
+		display: block;
+		font-size: 10px;
+		line-height: 1.2em;
+		color: #fff;
+		font-weight: 700;
+	}
+	.btn-social-counter__add-icon {
+		display: block;
+		position: absolute;
+		width: 26px;
+		height: 26px;
+		border-radius: 50%;
+		border: 2px solid #fff;
+		right: 23px;
+		top: 50%;
+		margin-top: -13px;
+
+		&::before,
+		&::after {
+			content:"";
+			display: block;
+			position: absolute;
+			background-color: #fff;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			transition: transform 0.2s ease-in-out;
+		}
+
+		&::before {
+			width: 8px;
+			height: 2px;
+		}
+
+		&::after {
+			width: 2px;
+			height: 8px;
+		}
+
+		.btn-social-counter:hover & {
+
+			&::before,
+			&::after {
+				transform: translate(-50%, -50%) rotate(-90deg);
+			}
+		}
+	}
+
+	.btn-social-counter__name {
+		@include font-accent(24px);
+		color: #fff;
+		line-height: 1em;
+		text-transform: none;
+		letter-spacing: -0.03em;
+
+		@media (min-width: 1199px) {
+			font-size: 28px;
+		}
+
+		.btn-social-counter--facebook & {
+			text-transform: lowercase;
+		}
+	}
+
+
+
+/* Social Buttons Styles */
+
+// Facebook
+.btn-social-counter--facebook {
+	background-color: $facebook-color;
+
+	.btn-social-counter__icon {
+		background-color: $facebook-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($facebook-color, 5%);
+	}
+
+	.df-social-count--columns & {
+		background-color: $facebook-color-layout-columns;
+
+		.btn-social-counter__count {
+			background-color: $facebook-count-color-layout-columns;
+		}
+	}
+
+	.df-social-count--grid & {
+		background-color: $facebook-color-layout-grid;
+
+		&:hover {
+			background-color: $facebook-color-hover-layout-grid;
+		}
+
+		.btn-social-counter__add-icon {
+			background-color: $facebook-icon-color-layout-grid;
+		}
+	}
+}
+
+// Twitter
+.btn-social-counter--twitter {
+	background-color: #3fcef2;
+
+	.btn-social-counter__icon {
+		background-color: #38c2e5;
+	}
+
+	&:hover {
+		background-color: lighten(#3fcef2, 5%);
+	}
+
+	.df-social-count--columns & {
+		background-color: #38c2e5;
+
+		.btn-social-counter__count {
+			background-color: #3fcef2;
+		}
+	}
+
+	.df-social-count--grid & {
+		background-color: #32b8e4;
+
+		&:hover {
+			background-color: #4cd3ff;
+		}
+
+		.btn-social-counter__add-icon {
+			background-color: #4cd3ff;
+		}
+	}
+}
+
+// Google+
+.btn-social-counter--googleplus {
+	background-color: #e34d39;
+
+	.btn-social-counter__icon {
+		background-color: #d54430;
+	}
+
+	&:hover {
+		background-color: lighten(#e34d39, 5%);
+	}
+
+	.df-social-count--columns & {
+		background-color: #d54430;
+
+		.btn-social-counter__count {
+			background-color: #d54430;
+		}
+	}
+
+	.fa-googleplus {
+		
+		&::before {
+			content: "\f0d5";
+		}
+	}
+}
+
+// Comments
+.btn-social-counter--comments {
+	background-color: #ffcc00;
+
+	.btn-social-counter__icon {
+		background-color: #ffbf13;
+	}
+
+	&:hover {
+		background-color: lighten(#ffcc00, 5%);
+	}
+
+	.df-social-count--columns & {
+		background-color: #ffbf13;
+
+		.btn-social-counter__count {
+			background-color: #ffcc00;
+		}
+	}
+
+	.df-social-count--grid & {
+		background-color: #ffbf13;
+
+		&:hover {
+			background-color: #ffd427;
+		}
+
+		.btn-social-counter__add-icon {
+			background-color: #ffd427;
+		}
+	}
+}
+
+// Instagram
+.btn-social-counter--instagram {
+	background-color: #9d54aa;
+
+	.btn-social-counter__icon {
+		background-color: #88439c;
+	}
+
+	&:hover {
+		background-color: lighten(#9d54aa, 5%);
+	}
+
+	.df-social-count--columns & {
+		background-color: #88439c;
+
+		.btn-social-counter__count {
+			background-color: #9d54aa;
+		}
+	}
+
+	.df-social-count--grid & {
+		background-color: #88439c;
+
+		&:hover {
+			background-color: #9d54aa;
+		}
+
+		.btn-social-counter__add-icon {
+			background-color: #9d54aa;
+		}
+	}
+}
+
+// Github
+.btn-social-counter--github {
+	background-color: $github-color;
+
+	.btn-social-counter__icon {
+		background-color: $github-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($github-color, 5%);
+	}
+}
+
+// Pinterest
+.btn-social-counter--pinterest {
+	background-color: $pinterest-color;
+
+	.btn-social-counter__icon {
+		background-color: $pinterest-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($pinterest-color, 5%);
+	}
+}
+
+// YouTube
+.btn-social-counter--youtube {
+	background-color: $youtube-color;
+
+	.btn-social-counter__icon {
+		background-color: $youtube-icon-color;
+	}
+
+	.fa-youtube {
+
+		&::before {
+			content: "\f16a";
+		}
+	}
+
+	&:hover {
+		background-color: lighten($youtube-color, 5%);
+	}
+
+	.df-social-count--columns & {
+
+		.btn-social-counter__count {
+			background-color: rgba(0,0,0,.05);
+		}
+	}
+}
+
+// Vimeo
+.btn-social-counter--vimeo {
+	background-color: $vimeo-color;
+
+	.btn-social-counter__icon {
+		background-color: $vimeo-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($vimeo-color, 5%);
+	}
+}
+
+// Steam
+.btn-social-counter--steam {
+	background-color: $steam-color;
+
+	.btn-social-counter__icon {
+		background-color: $steam-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($steam-color, 5%);
+	}
+}
+
+// Twitch
+.btn-social-counter--twitch {
+	background-color: $twitch-color;
+
+	.btn-social-counter__icon {
+		background-color: $twitch-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($twitch-color, 5%);
+	}
+}
+
+// Tumblr
+.btn-social-counter--tumblr {
+	background-color: $tumblr-color;
+
+	.btn-social-counter__icon {
+		background-color: $tumblr-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($tumblr-color, 5%);
+	}
+}
+
+// Posts
+.btn-social-counter--posts {
+	background-color: $posts-color;
+
+	.btn-social-counter__icon {
+		background-color: $posts-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($posts-color, 5%);
+	}
+
+	.fa-posts {
+
+		&::before {
+			content: "\f0f6";
+		}
+	}
+}
+
+// Users
+.btn-social-counter--users {
+	background-color: $users-color;
+
+	.btn-social-counter__icon {
+		background-color: $users-icon-color;
+	}
+
+	&:hover {
+		background-color: lighten($users-color, 5%);
+	}
+}
+
+/*=====  End of DF Social Count  ======*/

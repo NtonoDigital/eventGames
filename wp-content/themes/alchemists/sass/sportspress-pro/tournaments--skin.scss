@@ -1,0 +1,32 @@
+/**
+ *
+ * Tournaments
+ *
+ */
+
+ .sp-tournament-bracket {
+
+	.sp-team-name {
+		background-color: $table-bg-active;
+		color: $headings-color;
+	}
+
+	.sp-event {
+		border-right-color: $table-bg-active !important;
+	}
+		.sp-event-title {
+			color: $body-font-color;
+		}
+
+	.sp-event-flip {
+		border-left-color: $table-bg-active !important
+	}
+
+	.sp-team .sp-team-name::before {
+		border-left-color: $table-bg-active;
+	}
+
+	.sp-team-flip .sp-team-name::before {
+		border-right-color: $table-bg-active;
+	}
+}

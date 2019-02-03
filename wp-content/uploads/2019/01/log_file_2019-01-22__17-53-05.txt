@@ -1,0 +1,163 @@
+
+---Downloaded files---
+The import files for: Soccer were successfully downloaded!
+Initial max execution time = 30
+Files info:
+Site URL = http://copamaltamorena.ntono.com
+Data file = /home/ntonoc5/copamaltamorena.ntono.com/wp-content/themes/alchemists/inc/demo/soccer/content.xml
+Widget file = /home/ntonoc5/copamaltamorena.ntono.com/wp-content/themes/alchemists/inc/demo/soccer/widgets.json
+Customizer file = not defined!
+Redux files:
+alchemists_data -> /home/ntonoc5/copamaltamorena.ntono.com/wp-content/themes/alchemists/inc/demo/soccer/redux_options.json 
+
+
+------
+New AJAX call!
+[WARNING] Failed to import pa_color Aqua
+[WARNING] Failed to import pa_color Black
+[WARNING] Failed to import pa_color Blue
+[WARNING] Failed to import product_color Color 01 - Violet
+[WARNING] Failed to import product_color Color 02 - Blue
+[WARNING] Failed to import product_color Color 03 - Light Blue
+[WARNING] Failed to import product_color Color 04 - Cyan
+[WARNING] Failed to import product_color Color 05- Aqua
+[WARNING] Failed to import product_color Color 06 – Green
+[WARNING] Failed to import product_color Color 07 - Yellow
+[WARNING] Failed to import product_color Color 08 - Orange
+[WARNING] Failed to import product_color Color 09 - Red
+[WARNING] Failed to import product_color Color 10 - Dark
+[WARNING] Failed to import product_visibility exclude-from-catalog
+[WARNING] Failed to import product_visibility exclude-from-search
+[WARNING] Failed to import product_type external
+[WARNING] Failed to import pa_size Extra Large
+[WARNING] Failed to import product_visibility featured
+[WARNING] Failed to import pa_color Green
+[WARNING] Failed to import product_type grouped
+[WARNING] Failed to import pa_size Large
+[WARNING] Failed to import pa_size Medium
+[WARNING] Failed to import product_visibility outofstock
+[WARNING] Failed to import product_visibility rated-1
+[WARNING] Failed to import product_visibility rated-2
+[WARNING] Failed to import product_visibility rated-3
+[WARNING] Failed to import product_visibility rated-4
+[WARNING] Failed to import product_visibility rated-5
+[WARNING] Failed to import product_type simple
+[WARNING] Failed to import pa_size Small
+[WARNING] Failed to import product_tag test tag
+[WARNING] Failed to import product_cat Uncategorized
+[WARNING] Failed to import product_type variable
+[WARNING] Failed to import product_cat Hats and Caps
+[WARNING] Failed to import product_cat Shirts and Hoodies
+[WARNING] Failed to import product_cat Sneakers
+[WARNING] Failed to import product_cat Alchemists
+[WARNING] Failed to import product_cat James Girobili
+[WARNING] Failed to import product_cat Running
+
+
+------
+New AJAX call!
+[WARNING] Failed to import pa_color Aqua
+[WARNING] Failed to import pa_color Black
+[WARNING] Failed to import pa_color Blue
+[WARNING] Failed to import product_color Color 01 - Violet
+[WARNING] Failed to import product_color Color 02 - Blue
+[WARNING] Failed to import product_color Color 03 - Light Blue
+[WARNING] Failed to import product_color Color 04 - Cyan
+[WARNING] Failed to import product_color Color 05- Aqua
+[WARNING] Failed to import product_color Color 06 – Green
+[WARNING] Failed to import product_color Color 07 - Yellow
+[WARNING] Failed to import product_color Color 08 - Orange
+[WARNING] Failed to import product_color Color 09 - Red
+[WARNING] Failed to import product_color Color 10 - Dark
+[WARNING] Failed to import product_visibility exclude-from-catalog
+[WARNING] Failed to import product_visibility exclude-from-search
+[WARNING] Failed to import product_type external
+[WARNING] Failed to import pa_size Extra Large
+[WARNING] Failed to import product_visibility featured
+[WARNING] Failed to import pa_color Green
+[WARNING] Failed to import product_type grouped
+[WARNING] Failed to import pa_size Large
+[WARNING] Failed to import pa_size Medium
+[WARNING] Failed to import product_visibility outofstock
+[WARNING] Failed to import product_visibility rated-1
+[WARNING] Failed to import product_visibility rated-2
+[WARNING] Failed to import product_visibility rated-3
+[WARNING] Failed to import product_visibility rated-4
+[WARNING] Failed to import product_visibility rated-5
+[WARNING] Failed to import product_type simple
+[WARNING] Failed to import pa_size Small
+[WARNING] Failed to import product_tag test tag
+[WARNING] Failed to import product_cat Uncategorized
+[WARNING] Failed to import product_type variable
+[WARNING] Failed to import product_cat Hats and Caps
+[WARNING] Failed to import product_cat Shirts and Hoodies
+[WARNING] Failed to import product_cat Sneakers
+[WARNING] Failed to import product_cat Alchemists
+[WARNING] Failed to import product_cat James Girobili
+[WARNING] Failed to import product_cat Running
+
+
+---Importing widgets---
+Sidebar : 
+
+DF Social Count - No Title - Imported
+ALC - Recent Posts - Popular News - Imported
+Tag Cloud - Tag Cloud - Imported
+Image - Advertisement - Imported
+ALC - Top Posts - Top Trending News - Imported
+
+Home - Sidebar 1 : 
+
+League Table - No Title - Imported
+DF Social Count - No Title - Imported
+ALC - Recent Posts - Popular News - Imported
+ALC: Featured Player - No Title - Imported
+ALC: Event Results - No Title - Imported
+ALC - Top Posts - Top Trending News - Imported
+Countdown - Next Match - Imported
+
+Megamenu Widget Area 1 : 
+
+ALC - Recent Posts - No Title - Imported
+
+Megamenu Widget Area 2 : 
+
+ALC - Recent Posts - No Title - Imported
+
+Pushy Panel : 
+
+ALC - Recent Posts - No Title - Imported
+Tag Cloud - Popular Tags - Imported
+Image - No Title - Imported
+
+Footer Widget Area 1 : 
+
+ALC - Contact Info - Contact Info - Imported
+
+Footer Widget Area 2 : 
+
+ALC - Recent Posts - Popular News - Imported
+
+Footer Widget Area 3 : 
+
+ALC - Recent Posts - Latest News - Imported
+
+Footer Widget Area 4 : 
+
+Text - Quick Contact - Imported
+
+alchemists-shop-sidebar : Sidebar does not exist in theme (moving widget to Inactive)
+
+woocommerce_product_categories - Categories - Site does not support widget
+nm_color_filters - Filter by Color - Site does not support widget
+woocommerce_layered_nav - Filter by Size - Site does not support widget
+woocommerce_price_filter - Filter by price - Site does not support widget
+woocommerce_top_rated_products - Hot Products - Site does not support widget
+
+
+
+---Importing Redux settings---
+Redux settings import for: alchemists_data finished successfully!
+
+---pt-ocdi/after_import---
+
