@@ -282,6 +282,7 @@ if ( class_exists( 'WP_Importer' ) ) {
 								<ul>
 									<li><input type="radio" name="sp_format" class="post-format" id="post-format-league" value="league" checked="checked"> <label for="post-format-league" class="post-format-icon post-format-league"><?php _e( 'Competitive', 'sportspress' ); ?></label></li>
 									<li><input type="radio" name="sp_format" class="post-format" id="post-format-friendly" value="friendly"> <label for="post-format-friendly" class="post-format-icon post-format-friendly"><?php _e( 'Friendly', 'sportspress' ); ?></label></li>
+									<li><input type="radio" name="sp_format" class="post-format" id="post-format-tournament" value="tournament"> <label for="post-format-tournament" class="post-format-icon post-format-tournament"><?php _e( 'Tournament', 'sportspress' ); ?></label></li>
 								<br>
 							</fieldset>
 						</td>
