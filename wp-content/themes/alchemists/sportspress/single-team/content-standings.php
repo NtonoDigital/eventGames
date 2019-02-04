@@ -16,10 +16,6 @@ $team_leagues = get_field('team_leagues');
 $team = new SP_Team( $id );
 $tables = $team->tables();
 
-var_dump($team_leagues);
-var_dump($tables);
-
-
 if ( $team_leagues ) {
 	// display selected Leagues
 	foreach ( $team_leagues as $team_league ) {
