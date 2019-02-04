@@ -51,7 +51,7 @@ endif;
 //Create a unique identifier based on the current time in microseconds
 $identifier = uniqid( 'table_' );
 
-$output = 'Testing...';
+$output = '';
 
 $output .= '<div class="card card--has-table">';
 
