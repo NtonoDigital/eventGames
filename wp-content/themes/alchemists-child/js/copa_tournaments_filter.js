@@ -29,7 +29,7 @@
             doAjax(data, function(resp){
                 var $field = $this.closest('.copa_tournaments_filter_inputs').find('[name="dropdown_sp_season"]');
                 var $html = '';
-                $field.children('option:not(:first-child)').remove();
+                $field.children('option').remove();
                 if(resp){
                     resp = JSON.parse(resp);
                     $.each(resp, function(k,v){
@@ -38,6 +38,7 @@
                     $field.append($html);
                 }
                 hideLoader($this);
+                $field.trigger('change');
             });
         });
         $('[name="dropdown_sp_season"]').on('change', function(e){
@@ -50,7 +51,7 @@
             doAjax(data, function(resp){
                 var $html = '',
                 $field = $this.closest('.copa_tournaments_filter_inputs').find('[name="dropdown_sp_table"]');
-                $field.children('option:not(:first-child)').remove();
+                $field.children('option').remove();
                 if(resp){
                     resp = JSON.parse(resp);
                     $.each(resp, function(k,v){
@@ -59,6 +60,7 @@
                     $field.append($html);
                 }
                 hideLoader($this);
+                $field.trigger('change');
             });
         });
         $('[name="dropdown_sp_table"]').on('change', function(e){
