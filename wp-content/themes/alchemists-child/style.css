@@ -10,6 +10,30 @@ Template: alchemists
 .copa_tournaments_filter{
     position: relative;
 }
+@media only screen and (max-width: 800px){
+    .copa_tournaments_filter table, .copa_tournaments_filter table thead, .copa_tournaments_filter table tfoot, .copa_tournaments_filter table tbody, .copa_tournaments_filter table th, .copa_tournaments_filter table td, .copa_tournaments_filter table tr{
+        display: block;   
+    }
+    .copa_tournaments_filter table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    .copa_tournaments_filter table td:before{
+        position: absolute;
+        content: attr(data-label);
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+    .copa_tournaments_filter table.sp-responsive-table tbody tr td::before, 
+    .copa_tournaments_filter table.sp-responsive-table tbody tr th::before {
+        position: static !important;
+        width: 40% !important;
+    }
+}
 .filter-loading{
     position: absolute;
     width: 100%;
