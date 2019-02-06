@@ -20,25 +20,19 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('FS_METHOD','direct');
-/*define('FORCE_SSL_ADMIN', true);
-// so check for https existence
-if (strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false){
-	 $_SERVER['HTTPS']='on';
-}*/
-define('DB_NAME', 'copamaltamorena_live');
+define('DB_NAME', 'wordpress');
 
 /** MySQL database username */
-define('DB_USER', 'cmalta_user');
+define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'copa2018passwdb');
+define('DB_PASSWORD', 'wordpress');
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'wp-db');
 
 /** Database Charset to use in creating database tables. */
-define('DB_CHARSET', 'utf8mb4');
+define('DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
