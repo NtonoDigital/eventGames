@@ -104,29 +104,54 @@ function copa_trm_results_filter($atts = array(), $content = null){
     if(!$tournaments || is_wp_error($tournaments)){
         return '';
     }
+    $results = $tseasons = array();
+
     foreach($tournaments as $k=>$tournament){
         $found = $wpdb->get_var("SELECT COUNT(*) FROM `wp2_postmeta` WHERE meta_key='sp_tournament' AND meta_value='{$tournament->ID}'");
         if((int)$found < 1){
             unset($tournaments[$k]);
+        }else{
+            $args = array(
+                'object_ids'               => (int)$tournament->ID,
+                'taxonomy'               => 'sp_season',
+                'orderby'                => 'name',
+                'order'                  => 'ASC',
+                'hide_empty'             => true,
+            );
+            $the_query = new WP_Term_Query($args);
+            if($the_query && !is_wp_error($the_query)){
+                $tseason = $the_query->get_terms();
+                
+                $sql = $wpdb->prepare("SELECT pm.meta_value FROM wp2_postmeta pm 
+                    INNER JOIN wp2_posts p ON pm.post_id=p.ID 
+                    WHERE p.post_type='sp_tournament' 
+                    AND p.post_status='publish'
+                    AND pm.meta_key='sp_event'
+                    AND p.ID IN(SELECT tr.object_id FROM wp2_term_relationships tr 
+                                INNER JOIN wp2_term_taxonomy tt ON tr.term_taxonomy_id=tt.term_taxonomy_id
+                                INNER JOIN wp2_terms t ON tt.term_id=t.term_id
+                                WHERE tr.object_id=%d AND t.term_id=%d)", $tournament->ID, $tseason[0]->term_id);
+                $result = $wpdb->get_results($sql);
+            }
+            if(!isset($result) || !$result || is_wp_error($result)){
+                unset($tournaments[$k]);
+            }else{
+                $results[] = $result;
+                $tseasons[] = $tseason;
+            }
         }
     }
 
-    $tempts = $tournaments;
+    if(!$results || !$tseasons){
+        return '';
+    }
+    $temptr = $tournaments;
+    $temptr = array_shift($temptr);
 
-    $tempts = array_shift($tempts);
+    $sp_tournament = $temptr->ID;
 
-    $args = array(
-        'object_ids'               => (int)$tempts->ID,
-        'taxonomy'               => 'sp_season',
-        'orderby'                => 'name',
-        'order'                  => 'ASC',
-        'hide_empty'             => true,
-    );
-    $the_query = new WP_Term_Query($args);
-    $tseasons = $the_query->get_terms();
-    
-    $sql = $wpdb->prepare("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_table' AND post_status='publish' AND ID IN(SELECT pm.post_id FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->term_relationships} tr ON pm.post_id=tr.object_id INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id=tt.term_taxonomy_id INNER JOIN {$wpdb->terms} t ON tt.term_id=t.term_id WHERE t.term_id=%d AND tt.taxonomy='sp_season' AND pm.meta_key='sp_tournament' AND pm.meta_value='%d')", $tseasons[0]->term_id, $tempts->ID);
-    $tables = $wpdb->get_results($sql);
+    $results = array_shift($results);
+    $tseasons = array_shift($tseasons);
 
     ob_start();
     ?>
@@ -155,8 +180,9 @@ function copa_trm_results_filter($atts = array(), $content = null){
         </div><br>
         <div class="copa_tournaments_filter_results">
         <?php
-            $table_id = (int)$tables[0]->ID;
-            require_once COPA_CHILD_THEME_DIR.'/league-table-part.php';
+            if($results && !is_wp_error($results)){
+                require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-results.php';
+            }
         ?>
         </div>
     </div>

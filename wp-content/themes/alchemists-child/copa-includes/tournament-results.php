@@ -38,10 +38,88 @@ $output .= '<div class="table-responsive sp-table-wrapper">';
 
 $output .= '<table class="table table-hover table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' . $identifier : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
 
+$output .= '<th>'.esc_html__('Match Day', 'alchemists').'</th>';
+$output .= '<th>'.esc_html__('Event', 'alchemists').'</th>';
+$output .= '<th>'.esc_html__('Result', 'alchemists').'</th>';
+$output .= '<th>'.esc_html__('League', 'alchemists').'</th>';
+$output .= '</tr></thead><tbody>';
+
+$the_tournament = get_post($sp_tournament);
+
 foreach($results as $result){
-$table = new SP_Event((int)$result->meta_value);
 
-$data = $table->outcome();
+    $output .= '<tr>';
 
-print_r($data);
+    $table = new SP_Event((int)$result->meta_value);
+
+    $data = $table->results();
+
+    $match_date = $table->day();
+
+    $output .= '<td class="data-day" data-label="'.esc_attr__('Match Day', 'alchemists').'">';
+    $output .= $match_date;
+    $output .= '</td>';
+
+    $counter = 0;
+
+    $output .= '<td class="data-event" data-label="'.esc_attr__('Event', 'alchemists').'">';
+
+    $all_goals = array();
+
+    foreach($data as $teamid=>$stat){
+        
+        if($counter > 1){
+            continue;
+        }
+
+        $team = get_post((int)$teamid);
+        
+        if(!is_numeric($stat['firsthalf'])){
+            $stat['firsthalf'] = 0;
+        }
+        if(!is_numeric($stat['secondhalf'])){
+            $stat['secondhalf'] = 0;
+        }
+        $all_goals[] = $goals = (int)$stat['firsthalf']+(int)$stat['secondhalf'];
+        
+        $name = $team->post_title;
+        $logo = '';
+        if ( has_post_thumbnail( $team->ID ) ){
+			$logo = get_the_post_thumbnail( $team->ID, 'sportspress-fit-icon' );
+        }
+        if($counter == 0){
+            $output .= '<span class="team-title">'.$name.'</span>&nbsp;&nbsp;';
+            if($logo){
+                $output .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
+            }
+            $output .= '<span class="team-goals">'.$goals.'</span>';
+            $output .= '-';
+        }else{
+            $output .= '<span class="team-goals">'.$goals.'</span>&nbsp;&nbsp;';
+            if($logo){
+                $output .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
+            }
+            $output .= '<span class="team-title">'.$name.'</span>';
+        }
+
+        $counter++;
+    }
+    $output .= '</td>';
+
+    $output .= '<td class="data-result" data-label="'.esc_attr__('Result', 'alchemists').'">';
+    $output .= implode(' - ', $all_goals);
+    $output .= '</td>';
+    
+    $output .= '<td class="data-league" data-label="'.esc_attr__('League', 'alchemists').'">';
+    $output .= $the_tournament->post_title;
+    $output .= '</td>';
+    $output .= '</tr>';
+
 }
+$output .= '</tbody></table>';
+
+$output .= '</div></div></div>';
+?>
+<div class="sp-template sp-template-results-table">
+	<?php echo $output; ?>
+</div>
