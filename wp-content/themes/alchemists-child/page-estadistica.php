@@ -236,6 +236,7 @@ $terms = get_the_terms( $id, 'sp_league' );
 		</ul>
 	</div>
 </nav>
+
 <!-- Team Pages Filter / End -->
 <?php endif; ?>
 

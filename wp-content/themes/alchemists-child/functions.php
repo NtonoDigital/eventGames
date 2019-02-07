@@ -153,3 +153,51 @@ function copa_tournaments_filter($atts = array(), $content = null){
     <?php
     return ob_get_clean();
 }
+
+
+add_action('page_before_content', 'display_pages_submenu', $priority = 10 );
+
+/**
+ * Sub menú
+ */
+function display_pages_submenu() {
+    global $post;
+
+    if( !$post ) return;
+    if( is_404() ) return;
+
+    if( $post->post_parent && $post->post_type === 'page' ) {
+
+        $args = array(
+            'post_parent' => $post->post_parent,
+            'post_type'   => 'page', 
+            'numberposts' => -1,
+            'post_status' => 'publish',
+            'orderby' => 'menu_order', 
+            'order' => 'ASC'
+        );
+        
+        $children = get_children( $args );
+
+        if( count( $children ) > 0 ) {
+            ob_start(); ?>
+            <!-- Submenu -->
+            <nav class="content-filter">
+                <div class="container">
+                    <a href="#" class="content-filter__toggle"></a>
+                    <ul class="content-filter__list">
+                        <?php foreach( $children as $child ): ?>
+                            <li class="content-filter__item <?php if ( $post->ID === $child->ID ) { echo 'content-filter__item--active'; }; ?>">
+                                <a href="<?php echo esc_url( get_permalink( $child->ID ) ); ?>" class="content-filter__link">
+                                <?php echo esc_html( $child->post_title  ); ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </nav>
+            <!-- Submenu / End -->
+            <?php
+            echo ob_get_clean();
+        }
+    }
+}
