@@ -110,8 +110,26 @@ foreach($results as $result){
     $output .= implode(' - ', $all_goals);
     $output .= '</td>';
     
+    $args = array(
+        'object_ids'               => (int)$result->meta_value,
+        'taxonomy'               => 'sp_league',
+        'orderby'                => 'name',
+        'order'                  => 'ASC',
+        'hide_empty'             => true,
+    );
+    $the_query = new WP_Term_Query($args);
+
+    $leagues = $the_query->get_terms();
+
     $output .= '<td class="data-league" data-label="'.esc_attr__('League', 'alchemists').'">';
-    $output .= $the_tournament->post_title;
+    if($leagues && !is_wp_error($leagues)){
+        foreach($leagues as $n=>$league){
+            if($n > 0){
+                $output .= ', ';
+            }
+            $output .= $league->name;
+        }
+    }
     $output .= '</td>';
     $output .= '</tr>';
 
