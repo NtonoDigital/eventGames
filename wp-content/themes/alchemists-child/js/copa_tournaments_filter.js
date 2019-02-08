@@ -66,7 +66,8 @@
         $('[name="dropdown_sp_table"]').on('change', function(e){
             var $this = $(this);
             var data = {
-                sp_table: $this.children('option:selected').val()
+                sp_table: $this.children('option:selected').val(),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
             };
             displayLoader($this);
             doAjax(data, function(resp){

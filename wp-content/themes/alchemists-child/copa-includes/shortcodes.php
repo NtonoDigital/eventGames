@@ -9,7 +9,10 @@ function copa_tournaments_filter($atts = array(), $content = null){
 
     wp_enqueue_script('copa_tournaments_filter');
 
-    extract(shortcode_atts(array('extra_css'), $atts, 'copa_tournaments_filter'));
+    extract(shortcode_atts(array(
+        'extra_css' => '',
+        'layout_type' => 'table',
+    ), $atts, 'copa_tournaments_filter'));
 
     $tournaments = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_tournament' AND post_status='publish' AND ID IN(SELECT tr.object_id FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id=tt.term_taxonomy_id WHERE tt.taxonomy='sp_season')");
 
@@ -42,7 +45,7 @@ function copa_tournaments_filter($atts = array(), $content = null){
 
     ob_start();
     ?>
-    <div class="copa_tournaments_filter<?php echo $extra_css? ' '.esc_attr($extra_css):null?>">
+    <div data-layouttype="<?php echo $layout_type?>" class="copa_tournaments_filter<?php echo $extra_css? ' '.esc_attr($extra_css):null?>">
         <div class="filter-loading hidden"><span></span></div>
         <div class="copa_tournaments_filter_inputs">
             <div class="row">
@@ -78,7 +81,11 @@ function copa_tournaments_filter($atts = array(), $content = null){
         <div class="copa_tournaments_filter_results">
         <?php
             $table_id = (int)$tables[0]->ID;
-            require_once COPA_CHILD_THEME_DIR.'/league-table-part.php';
+            if($layout_type == 'icon'){
+                require_once COPA_CHILD_THEME_DIR.'/copa-includes/league-groups-icons.php';
+            }else{
+                require_once COPA_CHILD_THEME_DIR.'/copa-includes/league-table-part.php';
+            }
         ?>
         </div>
     </div>
