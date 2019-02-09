@@ -62,17 +62,10 @@ function display_pages_submenu() {
     }
 }
 
-/**
- * Helper function
- */
-// filter
-function teams_in_gallery_albums_posts_where( $where ) {
-	
-	$where = str_replace("meta_key = 'teams_in_gallery_albums_$", "meta_key LIKE 'teams_in_gallery_albums_%", $where);
-
-	return $where;
+function copa_add_query_var_speventalbum( $vars ) {
+    array_push( $vars, 'speventalbum' );
+	return $vars;
 }
-
-add_filter('posts_where', 'teams_in_gallery_albums_posts_where');
+add_filter( 'query_vars', 'copa_add_query_var_speventalbum' );
 
 require_once COPA_CHILD_THEME_DIR . '/copa-includes/acf-fields.php';

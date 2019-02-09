@@ -48,7 +48,6 @@ if ( $page_heading_overlay == 0 ) {
 		<div class="row">
 
 			<div id="primary" class="content-area col-md-8">
-
 				<?php
 				while ( have_posts() ) : the_post();
 

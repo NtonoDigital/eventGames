@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function maltamorena_acf_add_local_field_groups() {
+    
+    /** Adding teams to album for quicker relationship */
     acf_add_local_field_group(array(
         'key' => 'group_maltamorena_2019_02_09_0331',
         'title' => esc_html__( 'Teams In Album', 'alchemists' ),
@@ -47,6 +49,54 @@ function maltamorena_acf_add_local_field_groups() {
                     'param' => 'post_type',
                     'operator' => '==',
                     'value' => 'albums',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'left',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => 1,
+        'description' => '',
+    ));
+
+    /** Adding albums to events for subpage relationship */
+    acf_add_local_field_group(array(
+        'key' => 'group_maltamorena_2019_02_09_1127',
+        'title' => esc_html__( 'Album of Event', 'alchemists' ),
+        'fields' => array(
+            array(
+                'key' => 'field_maltamorena_2019_02_09_1126',
+                'label' => esc_html__( 'Album', 'alchemists' ),
+                'name' => 'copa_event_album',
+                'type' => 'post_object',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'post_type' => array(
+                    0 => 'albums',
+                ),
+                'taxonomy' => array(
+                ),
+                'allow_null' => 1,
+                'multiple' => 0,
+                'return_format' => 'object',
+                'ui' => 1,
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'sp_event',
                 ),
             ),
         ),
