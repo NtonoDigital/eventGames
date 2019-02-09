@@ -61,3 +61,18 @@ function display_pages_submenu() {
         }
     }
 }
+
+/**
+ * Helper function
+ */
+// filter
+function teams_in_gallery_albums_posts_where( $where ) {
+	
+	$where = str_replace("meta_key = 'teams_in_gallery_albums_$", "meta_key LIKE 'teams_in_gallery_albums_%", $where);
+
+	return $where;
+}
+
+add_filter('posts_where', 'teams_in_gallery_albums_posts_where');
+
+require_once COPA_CHILD_THEME_DIR . '/copa-includes/acf-fields.php';

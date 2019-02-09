@@ -148,6 +148,9 @@ elseif ( $page_heading == 'page_hero_posts_slider' ) :
 
 		<div id="primary" class="content-area">
 			<main id="main" class="site-main <?php echo esc_attr( $container_class ); ?>">
+				<?php $teams = get_field('teams_in_gallery_albums'); var_dump( $teams ); ?>
+
+				
 
 				<?php
 				$images = get_field('album_photos');
