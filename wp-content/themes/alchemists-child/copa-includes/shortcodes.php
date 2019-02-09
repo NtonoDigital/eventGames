@@ -104,7 +104,10 @@ function copa_trm_results_filter($atts = array(), $content = null){
 
     wp_enqueue_script('copa_tournaments_filter');
 
-    extract(shortcode_atts(array('extra_css'), $atts, 'copa_tournaments_filter'));
+    extract(shortcode_atts(array(
+        'extra_css' => '',
+        'layout_type' => 'results',
+    ), $atts, 'copa_tournaments_filter'));
 
     $tournaments = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_tournament' AND post_status='publish' AND ID IN(SELECT tr.object_id FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id=tt.term_taxonomy_id WHERE tt.taxonomy='sp_season')");
 
@@ -162,7 +165,7 @@ function copa_trm_results_filter($atts = array(), $content = null){
 
     ob_start();
     ?>
-    <div class="copa_tournaments_filter<?php echo $extra_css? ' '.esc_attr($extra_css):null?>">
+    <div data-layouttype="<?php echo $layout_type?>" class="copa_tournaments_filter<?php echo $extra_css? ' '.esc_attr($extra_css):null?>">
         <div class="filter-loading hidden"><span></span></div>
         <div class="copa_tournaments_filter_inputs">
             <div class="row">
@@ -188,7 +191,11 @@ function copa_trm_results_filter($atts = array(), $content = null){
         <div class="copa_tournaments_filter_results">
         <?php
             if($results && !is_wp_error($results)){
-                require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-results.php';
+                if($layout_type == 'calender'){
+                    require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-event-list.php';
+                }else{
+                    require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-results.php';
+                }
             }
         ?>
         </div>

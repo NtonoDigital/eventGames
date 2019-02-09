@@ -47,6 +47,7 @@ function copa_load_filter_vars()
                 // creteria based html output
                 switch($_POST['criteria']){
                     case 'results':
+                    case 'calender':
                         $sql = $wpdb->prepare("SELECT pm.meta_value FROM wp2_postmeta pm 
                         INNER JOIN wp2_posts p ON pm.post_id=p.ID 
                         WHERE p.post_type='sp_tournament' 
@@ -58,7 +59,12 @@ function copa_load_filter_vars()
                                     WHERE tr.object_id=%d AND t.term_id=%d)", $sp_tournament, $sp_season);
                         $results = $wpdb->get_results($sql);
                         if($results && !is_wp_error($results)){
-                            require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-results.php';
+                            $layout_type = isset($_POST['criteria']) && $_POST['criteria'] ? $_POST['criteria'] : 'calender';
+                            if($layout_type == 'calender'){
+                                require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-event-list.php';
+                            }else{
+                                require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-results.php';
+                            }
                         }
                     break;
                 }
