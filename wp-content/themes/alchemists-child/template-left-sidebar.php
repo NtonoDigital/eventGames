@@ -1,28 +1,18 @@
 <?php
 /**
- * The template for displaying single Album Custom Post Type
+ * Template Name: Left Sidebar
  *
  * @author    Dan Fisher
  * @package   Alchemists
  * @since     1.0.0
- * @version   3.0.12
+ * @version   2.2.0
  */
 
 get_header();
 
-$alchemists_data = get_option('alchemists_data');
+$alchemists_data       = get_option('alchemists_data');
 $page_heading_overlay  = isset( $alchemists_data['alchemists__opt-page-title-overlay-on'] ) ? $alchemists_data['alchemists__opt-page-title-overlay-on'] : '';
 $breadcrumbs           = isset( $alchemists_data['alchemists__opt-page-title-breadcrumbs'] ) ? $alchemists_data['alchemists__opt-page-title-breadcrumbs'] : '';
-
-$container_class = '';
-$sp_preset_name = 'default';
-
-if ( alchemists_sp_preset( 'football' ) ) {
-	$container_class = 'container';
-	$sp_preset_name = 'football';
-} elseif ( alchemists_sp_preset( 'soccer') ) {
-	$sp_preset_name = 'soccer';
-}
 
 if ( $page_heading_overlay == 0 ) {
 	$page_heading_overlay = 'page-heading--no-bg';
@@ -100,20 +90,19 @@ if ( $page_content_bottom_padding == 'none' ) {
 	$content_classes[] = 'pb-0';
 }
 
+// Get query var for sp_event_album
+$sp_event_album_page = get_query_var( 'speventalbum' );
 ?>
 
+<?php if ( $page_heading == 'page_hero' ) { ?>
 
-<?php if ( $page_heading == 'page_hero' ) :
+  <?php get_template_part( 'template-parts/page-hero-unit'); ?>
 
-	get_template_part( 'template-parts/page-hero-unit' );
+<?php } elseif ( $page_heading == 'page_hero_posts_slider' ) { ?>
 
-elseif ( $page_heading == 'page_hero_posts_slider' ) :
+  <?php get_template_part( 'template-parts/page-hero-posts-slider'); ?>
 
-	get_template_part( 'template-parts/page-hero-posts-slider' );
-
-?>
-
-<?php elseif ( $page_heading == 'page_default' || ! $page_heading ) : ?>
+<?php } elseif ( $page_heading == 'page_default' || !$page_heading ) { ?>
 
 	<!-- Page Heading
 	================================================== -->
@@ -134,48 +123,74 @@ elseif ( $page_heading == 'page_hero_posts_slider' ) :
 		</div>
 	</div>
 
+<?php } ?>
+
+<?php if ( is_singular( 'sp_event' ) ) : ?>
+
+    <!-- Event Page Filter -->
+    <nav class="content-filter">
+        <div class="container">
+            <a href="#" class="content-filter__toggle"></a>
+            <ul class="content-filter__list">
+                <li class="content-filter__item <?php if ( empty( $sp_event_album_page )) { echo 'content-filter__item--active'; }; ?>">
+                    <a href="<?php echo esc_url( get_permalink() ); ?>" class="content-filter__link">
+                        <?php echo __(' Resumen',  'alchemists' ); ?>
+                    </a>
+                </li>
+                <li class="content-filter__item <?php if ( isset( $sp_event_album_page ) && $sp_event_album_page === "1" ) { echo 'content-filter__item--active'; }; ?>">
+                    <a href="<?php echo esc_url( get_permalink() ); ?>?speventalbum=1" class="content-filter__link">
+                        <?php echo __( 'Fotos', 'alchemists' ); ?>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Event Page Filter / End -->
 <?php endif; ?>
 
-<div class="site-content" id="content">
+<?php if(  isset( $sp_event_album_page ) && $sp_event_album_page === "1" ):
+    
+    $copa_event_album = get_field( 'copa_event_album' );
+    // get_template_part( 'template-parts/content', 'album' );
+    include( locate_template( 'template-parts/content-album.php' ) ); 
 
-	<div class="container">
-		<div class="content-title">
-			<a href="<?php echo wp_get_referer(); ?>" class="btn btn-xs btn-default btn-outline"><?php esc_html_e( 'Go Back to the Albums', 'alchemists' ); ?></a>
-		</div>
-	</div>
+?>
+           
 
-	<div class="row">
+<?php else: ?>
 
-		<div id="primary" class="content-area">
-			<main id="main" class="site-main <?php echo esc_attr( $container_class ); ?>">
-				<?php $teams = get_field('teams_in_gallery_albums'); ?>
+    <div class="site-content <?php echo implode( ' ', $content_classes ); ?>" id="content">
+        <div class="container">
+            <div class="row">
 
-				
+                <div id="primary" class="content-area col-md-8 col-md-push-4">
+                    <main id="main" class="site-main">
 
-				<?php
-				$images = get_field('album_photos');
+                    <?php
+                    while ( have_posts() ) : the_post();
 
-				if ( $images ): ?>
-				<!-- Gallery Album -->
-				<div class="album album--condensed container-fluid">
-					<div class="row">
+                        get_template_part( 'template-parts/content', 'page' );
 
-						<?php
-						foreach ( $images as $image ) :
-							include( locate_template( 'sportspress/single-team/albums/album-' . $sp_preset_name . '.php' ) );
-						endforeach;
-						?>
+                        // If comments are open or we have at least one comment, load up the comment template.
+                        if ( comments_open() || get_comments_number() ) :
+                            comments_template();
+                        endif;
 
-					</div>
-				</div>
-				<!-- Gallery Album / End -->
-				<?php endif; ?>
+                    endwhile; // End of the loop.
+                    ?>
 
-			</main><!-- #main -->
-		</div><!-- #primary -->
-
-	</div>
-</div>
+                    </main><!-- #main -->
+                </div><!-- #primary -->
 
 
-<?php get_footer();
+                <aside id="secondary" class="sidebar widget-area col-md-4 col-md-pull-8">
+                    <?php get_sidebar(); ?>
+                </aside><!-- #secondary -->
+
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php
+get_footer();
