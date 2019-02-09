@@ -68,4 +68,22 @@ function copa_add_query_var_speventalbum( $vars ) {
 }
 add_filter( 'query_vars', 'copa_add_query_var_speventalbum' );
 
+function copa_malta_theme_setup() {
+    add_image_size('alchemists_thumbnail-player', 356, 356, array('cente', 'center')); // Player Normal
+	add_image_size('alchemists_thumbnail-player-lg', 380, 380, array('cente', 'center')); // Player Large
+	add_image_size('alchemists_thumbnail-player-lg-fit', 470, 470, array('cente', 'center')); // Player Large - fit
+	add_image_size('alchemists_thumbnail-player-sm', 189, 189, array('left', 'top')); // Player Small
+	add_image_size('alchemists_thumbnail-player-block', 140, 140, array('cente', 'center')); // Player Small (Team Blocks)
+}
+add_action( 'after_setup_theme', 'copa_malta_theme_setup', 20 );
+
+/*
+    add_image_size('alchemists_thumbnail-player', 356, 400, false); // Player Normal
+	add_image_size('alchemists_thumbnail-player-lg', 380, 570, true); // Player Large
+	add_image_size('alchemists_thumbnail-player-lg-fit', 470, 580, false); // Player Large - fit
+	add_image_size('alchemists_thumbnail-player-sm', 189, 198, array('left', 'top')); // Player Small
+    add_image_size('alchemists_thumbnail-player-block', 140, 210, true); // Player Small (Team Blocks)
+ */
+
+// acf for copa
 require_once COPA_CHILD_THEME_DIR . '/copa-includes/acf-fields.php';
