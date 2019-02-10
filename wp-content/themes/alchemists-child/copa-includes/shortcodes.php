@@ -1,6 +1,5 @@
 <?php
 
-
 add_shortcode('copa_tournaments_filter', 'copa_tournaments_filter');
 
 function copa_tournaments_filter($atts = array(), $content = null){
@@ -86,6 +85,84 @@ function copa_tournaments_filter($atts = array(), $content = null){
             }else{
                 require_once COPA_CHILD_THEME_DIR.'/copa-includes/league-table-part.php';
             }
+        ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_shortcode('copa_tournaments_final_filter', 'copa_tournaments_final_filter');
+
+function copa_tournaments_final_filter($atts = array(), $content = null){
+    
+    global $wpdb;
+
+    wp_enqueue_script('copa_tournaments_filter');
+
+    extract(shortcode_atts(array(
+        'extra_css' => '',
+        'layout_type' => 'final',
+    ), $atts, 'copa_tournaments_filter'));
+
+    $tournaments = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_tournament' AND post_status='publish' AND ID IN(SELECT tr.object_id FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id=tt.term_taxonomy_id WHERE tt.taxonomy='sp_season')");
+
+    if(!$tournaments || is_wp_error($tournaments)){
+        return '';
+    }
+    foreach($tournaments as $k=>$tournament){
+        $found = $wpdb->get_var("SELECT COUNT(*) FROM `wp2_postmeta` WHERE meta_key='sp_tournament' AND meta_value='{$tournament->ID}'");
+        if((int)$found < 1){
+            unset($tournaments[$k]);
+        }
+    }
+    if(!$tournaments || is_wp_error($tournaments)){
+        return '';
+    }
+
+    $tempts = $tournaments;
+
+    $tempts = array_shift($tempts);
+
+    $args = array(
+        'object_ids'               => (int)$tempts->ID,
+        'taxonomy'               => 'sp_season',
+        'orderby'                => 'name',
+        'order'                  => 'ASC',
+        'hide_empty'             => true,
+    );
+    $the_query = new WP_Term_Query($args);
+    $tseasons = $the_query->get_terms();
+    
+    ob_start();
+    ?>
+    <div data-layouttype="<?php echo $layout_type?>" class="copa_tournaments_filter<?php echo $extra_css? ' '.esc_attr($extra_css):null?>">
+        <div class="filter-loading hidden"><span></span></div>
+        <div class="copa_tournaments_filter_inputs">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select name="results_sp_tournament">
+                        <?php 
+                        if(!empty($tournaments) && !is_wp_error($tournaments)){
+                            foreach($tournaments as $tournament){    
+                        ?>
+                        <option value="<?php echo $tournament->ID?>"><?php echo $tournament->post_title;?></option>
+                        <?php }}?>
+                    </select>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select name="results_sp_season">
+                        <?php foreach($tseasons as $t){?>
+                        <option value="<?php echo $t->term_id?>"><?php echo $t->name?></option>
+                        <?php }?>
+                    </select>
+                </div>
+            </div>
+        </div><br>
+        <div class="copa_tournaments_filter_results">
+        <?php
+            $tournament_id = (int)$tempts->ID;
+            require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-bracket.php';
         ?>
         </div>
     </div>

@@ -67,6 +67,10 @@ function copa_load_filter_vars()
                             }
                         }
                     break;
+                    case 'final': 
+                        $tournament_id = $sp_tournament;
+                        require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-bracket.php';
+                    break;
                 }
             }
         }elseif(isset($_POST['sp_table']) 
