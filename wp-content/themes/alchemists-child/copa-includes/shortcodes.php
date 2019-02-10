@@ -280,3 +280,77 @@ function copa_trm_results_filter($atts = array(), $content = null){
     <?php
     return ob_get_clean();
 }
+
+/**
+ * Shortcode for tournament players filter
+ */
+
+add_shortcode('copa_trm_players_filter', 'copa_trm_players_filter');
+
+function copa_trm_players_filter($atts = array(), $content = null){
+    
+    global $wpdb;
+
+    wp_enqueue_script('copa_tournaments_filter');
+
+    extract(shortcode_atts(array(
+        'extra_css' => '',
+        'layout_type' => 'team_players',
+    ), $atts, 'copa_tournaments_filter'));
+
+    $teams = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_team' AND post_status='publish'");
+    $id  = $wpdb->get_var("SELECT ID FROM {$wpdb->posts} WHERE post_type='sp_list' AND post_status='publish' ORDER BY ID DESC LIMIT 1");
+
+    if(!$teams 
+    || !$id
+    || is_wp_error($teams)
+    || is_wp_error($id)
+    ){
+        return '';
+    }
+
+    $temptr = $teams;
+    $temptr = array_shift($temptr);
+
+    $copa_team_players_list = new Copa_Team_Players_List(array(
+        'team_id' => (int)$temptr->ID
+    ));
+    $copa_team_players_list->alterplayers();
+
+    ob_start();
+    ?>
+    <div data-layouttype="<?php echo $layout_type?>" class="copa_tournaments_filter<?php echo $extra_css? ' '.esc_attr($extra_css):null?>">
+        <div class="filter-loading hidden"><span></span></div>
+        <div class="copa_tournaments_filter_inputs">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" class="input-text" name="copa_sp_player" placeholder="<?php esc_attr_e('Search Players', 'alchemists')?>">
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select name="copa_sp_team">
+                        <?php 
+                        if(!empty($teams) && !is_wp_error($teams)){
+                            foreach($teams as $team){    
+                        ?>
+                        <option value="<?php echo $team->ID?>"><?php echo $team->post_title;?></option>
+                        <?php }}?>
+                    </select>
+                </div>
+                
+            </div>
+        </div><br>
+        <div class="copa_tournaments_filter_results">
+        <?php
+            if(function_exists('sp_get_template')){
+                sp_get_template('player-list.php', array(
+                    'id' => $id,
+                    'show_title' => false,
+                ));
+            }
+            $copa_team_players_list->alterplayers(false); //reseting the players list to default
+        ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}

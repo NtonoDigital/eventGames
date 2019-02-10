@@ -83,7 +83,68 @@ function copa_load_filter_vars()
             }else{
                 require_once COPA_CHILD_THEME_DIR.'/copa-includes/league-table-part.php';
             }
+        }elseif(isset($_POST['sp_team']) 
+        && $_POST['sp_team'] 
+        && is_numeric($_POST['sp_team'])){
+            $args = array(
+                'team_id' => (int)$_POST['sp_team']
+            );
+            if(isset($_POST['player_name']) && $_POST['player_name']){
+                $args['player_name'] = $_POST['player_name'];
+            }
+
+            $copa_team_players_list = new Copa_Team_Players_List($args);
+            $copa_team_players_list->alterplayers();
+
+            $layout_type = isset($_POST['criteria']) && $_POST['criteria'] ? $_POST['criteria'] : 'team_players';
+            if($layout_type == 'team_players'){
+                $id  = $wpdb->get_var("SELECT ID FROM {$wpdb->posts} WHERE post_type='sp_list' AND post_status='publish' ORDER BY ID DESC LIMIT 1");
+                if($id && !is_wp_error($id) && function_exists('sp_get_template')){
+                    sp_get_template('player-list.php', array(
+                        'id' => $id,
+                        'show_title' => false,
+                    ));
+                }
+            }
         }
     }
     die();
+}
+
+class Copa_Team_Players_List{
+
+    public $do_player_list_custom_filter = false;
+    private $_args;
+
+    public function __construct($args)
+    {
+        $this->_args = $args;
+        add_filter('sportspress_player_list_players', array(&$this, 'copa_player_list_players_filter'), 11, 4);
+    }
+    public function alterplayers($action = true){
+        $this->do_player_list_custom_filter = $action;
+    }
+    public function copa_player_list_players_filter($players, $args = array(), $team = null, $team_key = null){
+        global $wpdb;
+        if($this->do_player_list_custom_filter){
+            if(isset($this->_args['player_name']) && preg_match('/^[\d\w ]+$/',$this->_args['player_name'])){
+                $sql = sprintf("SELECT p.* FROM {$wpdb->postmeta} pm 
+                INNER JOIN {$wpdb->posts} p ON pm.post_id=p.ID
+                WHERE pm.meta_key='sp_current_team' 
+                AND pm.meta_value='%d'
+                AND p.post_type='sp_player' AND p.post_title LIKE '%%%s%%'", $this->_args['team_id'], $this->_args['player_name']);
+            }else{
+                $sql = $wpdb->prepare("SELECT p.* FROM {$wpdb->postmeta} pm 
+                INNER JOIN {$wpdb->posts} p ON pm.post_id=p.ID
+                WHERE pm.meta_key='sp_current_team' 
+                AND pm.meta_value='%d'
+                AND p.post_type='sp_player'", $this->_args['team_id']);
+            }
+            $results = $wpdb->get_results($sql);
+            if(!is_wp_error($results)){
+                $players = $results;
+            }
+        }
+        return $players;
+    }
 }

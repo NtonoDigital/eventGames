@@ -1,4 +1,5 @@
 (function($){
+    var globalajax;
     function doAjax(data, successcb){
         var options = {
             url: copa_ajax_url,
@@ -11,7 +12,12 @@
         };
         options.data = $.extend(options.data, data);
         options.success = successcb;
-        $.ajax(options);
+        globalajax = $.ajax(options);
+    }
+    function stopAjax(){
+        if(globalajax){
+            globalajax.abort();
+        }
     }
     function displayLoader($field){
         $field.closest('.copa_tournaments_filter').find('.filter-loading').removeClass('hidden');
@@ -106,6 +112,46 @@
                 sp_season: $this.children('option:selected').val(),
                 criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype'),
             };
+            displayLoader($this);
+            doAjax(data, function(resp){
+                var $html = '',
+                $content = $this.closest('.copa_tournaments_filter_inputs').siblings('.copa_tournaments_filter_results');
+                $content.html(resp);
+                hideLoader($this);
+            });
+        });
+        /* Team players */
+        $('[name="copa_sp_team"]').on('change', function(e){
+            var $this = $(this);
+            var data = {
+                player_name: $this.closest('.copa_tournaments_filter_inputs').find('[name="copa_sp_player"]').val(),
+                sp_team: $this.children('option:selected').val(),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype'),
+            };
+            displayLoader($this);
+            doAjax(data, function(resp){
+                var $html = '',
+                $content = $this.closest('.copa_tournaments_filter_inputs').siblings('.copa_tournaments_filter_results');
+                $content.html(resp);
+                hideLoader($this);
+            });
+        });
+        $('[name="copa_sp_player"]').on('keyup', function(e){
+            var $this = $(this);
+            if(
+                (e.keyCode < 48 && e.keyCode > 57)
+                && (e.keyCode < 65 && e.keyCode > 90)
+                && (e.keyCode < 96 && e.keyCode > 105)
+                && e.keyCode != 32 && e.keyCode != 40 && e.keyCode != 8
+            ){
+                return false;
+            }
+            var data = {
+                sp_team: $this.closest('.copa_tournaments_filter_inputs').find('[name="copa_sp_team"] option:selected').val(),
+                player_name: $this.val(),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype'),
+            };
+            stopAjax();
             displayLoader($this);
             doAjax(data, function(resp){
                 var $html = '',
