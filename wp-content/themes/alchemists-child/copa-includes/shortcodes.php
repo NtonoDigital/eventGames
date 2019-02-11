@@ -298,13 +298,14 @@ function copa_trm_players_filter($atts = array(), $content = null){
         'layout_type' => 'team_players',
     ), $atts, 'copa_tournaments_filter'));
 
-    $teams = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_team' AND post_status='publish'");
-    $id  = $wpdb->get_var("SELECT ID FROM {$wpdb->posts} WHERE post_type='sp_list' AND post_status='publish' ORDER BY ID DESC LIMIT 1");
+    // $teams = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_team' AND post_status='publish'");
+    $teams = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_type='sp_list' AND post_status='publish' ORDER BY ID DESC");
+    // $id  = $wpdb->get_var("SELECT ID FROM {$wpdb->posts} WHERE post_type='sp_list' AND post_status='publish' ORDER BY ID DESC LIMIT 1");
 
     if(!$teams 
-    || !$id
+    // || !$id
     || is_wp_error($teams)
-    || is_wp_error($id)
+    // || is_wp_error($id)
     ){
         return '';
     }
@@ -312,10 +313,12 @@ function copa_trm_players_filter($atts = array(), $content = null){
     $temptr = $teams;
     $temptr = array_shift($temptr);
 
-    $copa_team_players_list = new Copa_Team_Players_List(array(
+    /*$copa_team_players_list = new Copa_Team_Players_List(array(
         'team_id' => (int)$temptr->ID
     ));
-    $copa_team_players_list->alterplayers();
+    $copa_team_players_list->alterplayers();*/
+
+    $id = (int)$temptr->ID;
 
     ob_start();
     ?>
@@ -327,7 +330,7 @@ function copa_trm_players_filter($atts = array(), $content = null){
                     <input type="text" class="input-text" name="copa_sp_player" placeholder="<?php esc_attr_e('Search Players', 'alchemists')?>">
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select name="copa_sp_team">
+                    <select name="copa_sp_list">
                         <?php 
                         if(!empty($teams) && !is_wp_error($teams)){
                             foreach($teams as $team){    
@@ -344,10 +347,10 @@ function copa_trm_players_filter($atts = array(), $content = null){
             if(function_exists('sp_get_template')){
                 sp_get_template('player-list.php', array(
                     'id' => $id,
-                    'show_title' => false,
+                    // 'show_title' => false,
                 ));
             }
-            $copa_team_players_list->alterplayers(false); //reseting the players list to default
+            // $copa_team_players_list->alterplayers(false); //reseting the players list to default
         ?>
         </div>
     </div>

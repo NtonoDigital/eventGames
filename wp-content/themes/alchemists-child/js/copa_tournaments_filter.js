@@ -121,7 +121,7 @@
             });
         });
         /* Team players */
-        $('[name="copa_sp_team"]').on('change', function(e){
+        $('[name="copa_sp_list"]').on('change', function(e){
             var $this = $(this);
             var data = {
                 player_name: $this.closest('.copa_tournaments_filter_inputs').find('[name="copa_sp_player"]').val(),
@@ -147,7 +147,7 @@
                 return false;
             }
             var data = {
-                sp_team: $this.closest('.copa_tournaments_filter_inputs').find('[name="copa_sp_team"] option:selected').val(),
+                sp_team: $this.closest('.copa_tournaments_filter_inputs').find('[name="copa_sp_list"] option:selected').val(),
                 player_name: $this.val(),
                 criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype'),
             };

@@ -86,23 +86,25 @@ function copa_load_filter_vars()
         }elseif(isset($_POST['sp_team']) 
         && $_POST['sp_team'] 
         && is_numeric($_POST['sp_team'])){
-            $args = array(
-                'team_id' => (int)$_POST['sp_team']
-            );
-            if(isset($_POST['player_name']) && $_POST['player_name']){
-                $args['player_name'] = $_POST['player_name'];
-            }
+            
+            $id = (int)$_POST['sp_team'];
 
-            $copa_team_players_list = new Copa_Team_Players_List($args);
-            $copa_team_players_list->alterplayers();
+            if(isset($_POST['player_name']) && $_POST['player_name']){
+                $args = array(
+                    'team_id' => $id,
+                    'player_name' => $_POST['player_name']
+                );
+                $copa_team_players_list = new Copa_Team_Players_List($args);
+                $copa_team_players_list->alterplayers();
+            }
 
             $layout_type = isset($_POST['criteria']) && $_POST['criteria'] ? $_POST['criteria'] : 'team_players';
             if($layout_type == 'team_players'){
-                $id  = $wpdb->get_var("SELECT ID FROM {$wpdb->posts} WHERE post_type='sp_list' AND post_status='publish' ORDER BY ID DESC LIMIT 1");
-                if($id && !is_wp_error($id) && function_exists('sp_get_template')){
+                // $id  = $wpdb->get_var("SELECT ID FROM {$wpdb->posts} WHERE post_type='sp_list' AND post_status='publish' ORDER BY ID DESC LIMIT 1");
+                if($id && function_exists('sp_get_template')){
                     sp_get_template('player-list.php', array(
                         'id' => $id,
-                        'show_title' => false,
+                        // 'show_title' => false,
                     ));
                 }
             }
@@ -124,26 +126,28 @@ class Copa_Team_Players_List{
     public function alterplayers($action = true){
         $this->do_player_list_custom_filter = $action;
     }
-    public function copa_player_list_players_filter($players, $args = array(), $team = null, $team_key = null){
+    public function copa_player_list_players_filter($players = array(), $args = array(), $team = null, $team_key = null){
         global $wpdb;
-        if($this->do_player_list_custom_filter){
-            if(isset($this->_args['player_name']) && preg_match('/^[\d\w ]+$/',$this->_args['player_name'])){
-                $sql = sprintf("SELECT p.* FROM {$wpdb->postmeta} pm 
-                INNER JOIN {$wpdb->posts} p ON pm.post_id=p.ID
-                WHERE pm.meta_key='sp_current_team' 
-                AND pm.meta_value='%d'
-                AND p.post_type='sp_player' AND p.post_title LIKE '%%%s%%'", $this->_args['team_id'], $this->_args['player_name']);
-            }else{
-                $sql = $wpdb->prepare("SELECT p.* FROM {$wpdb->postmeta} pm 
-                INNER JOIN {$wpdb->posts} p ON pm.post_id=p.ID
-                WHERE pm.meta_key='sp_current_team' 
-                AND pm.meta_value='%d'
-                AND p.post_type='sp_player'", $this->_args['team_id']);
+        if($this->do_player_list_custom_filter && isset($this->_args['player_name']) 
+        && $this->_args['player_name'] 
+        && preg_match('/^[\d\w ]+$/',$this->_args['player_name'])){
+            $sp_players = get_post_meta( $this->_args['team_id'], 'sp_players', true );
+            if($sp_players){
+                $sp_players = implode(',', array_keys($sp_players));
+                $sql = sprintf("SELECT * FROM {$wpdb->posts} WHERE ID IN(%s) AND post_type='sp_player' AND post_status='publish' AND post_title LIKE '%%%s%%'", $sp_players, $this->_args['player_name']);
+            }elseif((int)$team){
+                $era = get_post_meta( $this->_args['team_id'], 'sp_era', true );
+                $meta_key = $era == 'past'? 'sp_past_team' : 'sp_current_team';
+                $sql = sprintf("SELECT * FROM {$wpdb->posts} WHERE ID IN(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='%s' AND meta_value='%d') AND post_status='publish' AND post_type='sp_player' AND post_title LIKE '%%%s%%'", $meta_key, (int)$team, $this->_args['player_name']);
             }
-            $results = $wpdb->get_results($sql);
-            if(!is_wp_error($results)){
-                $players = $results;
+            if(isset($sql) && $sql){
+                $results = $wpdb->get_results($sql);
+                if(!is_wp_error($results)){
+                    $players = $results;
+                    return $players;
+                }
             }
+            // $players = array();
         }
         return $players;
     }
