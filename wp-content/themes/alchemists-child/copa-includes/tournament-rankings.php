@@ -84,17 +84,11 @@ function copa_display_tournament_teams_rankings($table_id){
         'goalsreceived' => esc_html__('Goals Received', 'alchemists'),
         'assists' => esc_html__('Assists', 'alchemists'),
         'cards' => esc_html__('Cards', 'alchemists'),
-        'avp' => esc_html__('AVP', 'alchemists'),
+        'mvp' => esc_html__('MVP', 'alchemists'),
     );
 
     
     $output .= '<div class="row">';
-
-    /*echo '<pre>';
-    // print_r($teams);
-    // print_r($events);
-    print_r($data);
-    echo '</pre>';*/
 
     foreach($data as $key=>$val1){
         if($val1){
