@@ -90,11 +90,11 @@ function copa_display_tournament_teams_rankings($table_id){
     
     $output .= '<div class="row">';
 
-    echo '<pre>';
+    /*echo '<pre>';
     // print_r($teams);
     // print_r($events);
     print_r($data);
-    echo '</pre>';
+    echo '</pre>';*/
 
     foreach($data as $key=>$val1){
         if($val1){
