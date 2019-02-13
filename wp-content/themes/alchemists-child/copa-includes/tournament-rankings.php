@@ -36,7 +36,7 @@ function copa_organize_teams_rankings_data($events, $teams){
             }
         }
     }
-
+    sort($merged['goalsgiven']);
     return $merged;
 }
 
