@@ -88,7 +88,7 @@ function copa_display_tournament_teams_rankings($table_id){
     );
 
     
-    $output .= '<div class="row">';
+    $output = '<div class="row">';
 
     foreach($data as $key=>$val1){
         if($val1){
