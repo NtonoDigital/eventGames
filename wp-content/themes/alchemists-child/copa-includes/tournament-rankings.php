@@ -12,11 +12,15 @@ function copa_organize_teams_rankings_data($events, $teams){
         foreach($events as $e){
             $event = get_post($e['id']);
             
+            if(
+                !in_array($e['teams'][0], $teams)
+                || !in_array($e['teams'][1], $teams)
+            ){
+                continue;
+            }
 
             foreach($e['teams'] as $key=>$team){
-                if(!in_array($team, $teams)){
-                    continue;
-                }
+                
                 if(!isset($merged['goalsgiven'][$team])){
                     $merged['goalsgiven'][$team] = 0;
                 }
