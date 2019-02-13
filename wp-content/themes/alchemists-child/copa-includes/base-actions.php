@@ -78,7 +78,10 @@ function copa_load_filter_vars()
         && is_numeric($_POST['sp_table'])){
             $table_id = (int)$_POST['sp_table'];
             $layout_type = isset($_POST['criteria']) && $_POST['criteria'] ? $_POST['criteria'] : 'table';
-            if($layout_type == 'icon'){
+            if($layout_type == 'teams_rankings'){
+                require_once COPA_CHILD_THEME_DIR.'/copa-includes/tournament-rankings.php';
+                copa_display_tournament_teams_rankings($table_id);
+            }elseif($layout_type == 'icon'){
                 require_once COPA_CHILD_THEME_DIR.'/copa-includes/league-groups-icons.php';
             }else{
                 require_once COPA_CHILD_THEME_DIR.'/copa-includes/league-table-part.php';
