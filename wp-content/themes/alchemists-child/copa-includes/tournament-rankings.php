@@ -6,6 +6,8 @@ function copa_organize_teams_rankings_data($events, $teams){
         if(!isset($merged['goals'])){
             $merged['goalsgiven'] = array();
             $merged['goalsreceived'] = array();
+            $merged['assists'] = array();
+            $merged['cards'] = array();
         }
         foreach($events as $e){
             $event = get_post($e['id']);
@@ -21,26 +23,45 @@ function copa_organize_teams_rankings_data($events, $teams){
                 if(!isset($merged['goalsreceived'][$team])){
                     $merged['goalsreceived'][$team] = 0;
                 }
-                $merged['goalsgiven'][$team] += $e['results'][$key];
+                $merged['goalsgiven'][$team] += (int)$e['results'][$key];
                 if($key > 0){
                     $revkey = 0;
                 }else{
                     $revkey = 1;
                 }
-                $merged['goalsreceived'][$team] += $e['results'][$revkey];
+                $merged['goalsreceived'][$team] += (int)$e['results'][$revkey];
             }
 
             $players = get_post_meta($event->ID, 'sp_players', true);
             if($players){
                 foreach($players as $team_id=>$data1){
-                    array_shift($data1);
-
+                    if(!in_array($team_id, $teams)){
+                        continue;
+                    }
+                    if(count($data1) > 0){
+                        array_shift($data1); // 0 index actually having no data
+                        foreach($data1 as $playerid => $loop){
+                            if(!isset($merged['assists'][$team_id])){
+                                $merged['assists'][$team_id] = 0;
+                            }
+                            if(!isset($merged['cards'][$team_id])){
+                                $merged['cards'][$team_id] = 0;
+                            }
+                            $merged['assists'][$team_id] += (int)$loop['assists'];
+                            $merged['cards'][$team_id] += (int)$loop['yellowcards'];
+                            $merged['cards'][$team_id] += (int)$loop['redcards'];
+                        }
+                    }
+                    
                 }
             }
         }
     }
-    arsort($merged['goalsgiven']);
-    arsort($merged['goalsreceived']);
+    if($merged){
+        foreach($merged as &$m){
+            arsort($m);
+        }
+    }
     return $merged;
 }
 
