@@ -12,6 +12,10 @@ function copa_organize_teams_rankings_data($events, $teams){
         foreach($events as $e){
             $event = get_post($e['id']);
             
+            if(!$event || is_wp_error($event)){
+                continue;
+            }
+
             if(
                 !in_array($e['teams'][0], $teams)
                 || !in_array($e['teams'][1], $teams)
@@ -76,6 +80,7 @@ function copa_organize_players_rankings_data($events, $teams){
         $merged['goalsgiven'] = array();
         $merged['assists'] = array();
         $merged['cards'] = array();
+        $merged['mvps'] = array();
         
         foreach($events as $e){
             $event = get_post($e);
@@ -93,6 +98,16 @@ function copa_organize_players_rankings_data($events, $teams){
             ){
                 continue;
             }
+            $stars = get_post_meta( $event->ID, 'sp_stars', true );
+
+            if($stars){
+                foreach($stars as $playerid=>$star){
+                    if(!isset($merged['mvps'][$playerid])){
+                        $merged['mvps'][$playerid] = 0;
+                    }
+                    $merged['mvps'][$playerid] += 1;
+                }
+            }
 
             if($players){
                 foreach($players as $team_id=>$data1){
@@ -103,7 +118,6 @@ function copa_organize_players_rankings_data($events, $teams){
                             if(!$playerid){ // 0 index actually having no data
                                 continue;
                             }
-                            
                             if(!isset($merged['goalsgiven'][$playerid])){
                                 $merged['goalsgiven'][$playerid] = 0;
                             }
@@ -150,7 +164,7 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
         'goalsreceived' => esc_html__('Goals Received', 'alchemists'),
         'assists' => esc_html__('Assists', 'alchemists'),
         'cards' => esc_html__('Cards', 'alchemists'),
-        'mvp' => esc_html__('MVP', 'alchemists'),
+        'mvps' => esc_html__('MVP', 'alchemists'),
     );
 
     
