@@ -74,7 +74,6 @@ function copa_organize_players_rankings_data($events, $teams){
     if($events){
         
         $merged['goalsgiven'] = array();
-        $merged['goalsreceived'] = array();
         $merged['assists'] = array();
         $merged['cards'] = array();
         
