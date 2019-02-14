@@ -91,11 +91,11 @@ function copa_organize_players_rankings_data($events, $teams){
             $players = get_post_meta($event->ID, 'sp_players', true);
 
             if($players){
+                print_r($players);
                 foreach($players as $team_id=>$data1){
                     
                     if(count($data1) > 0){
                         array_shift($data1); // 0 index actually having no data
-                        print_r($data1);
                         foreach($data1 as $playerid => $loop){
 
                             
