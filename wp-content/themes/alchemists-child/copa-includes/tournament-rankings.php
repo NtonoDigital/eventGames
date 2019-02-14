@@ -136,7 +136,7 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
     $tournament = get_post_meta($table_id, 'sp_tournament', true);
     $events = get_post_meta($tournament, 'sp_events', true);
     if($mode == 'players_rankings'){
-        $events = get_post_meta($tournament, 'sp_events');
+        $events = get_post_meta($tournament, 'sp_event');
         print_r($events);
         // $data = copa_organize_players_rankings_data($events, $teams);
     }else{
