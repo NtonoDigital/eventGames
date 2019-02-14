@@ -94,10 +94,9 @@ function copa_organize_players_rankings_data($events, $teams){
                 foreach($players as $team_id=>$data1){
                     
                     if(count($data1) > 0){
-                        // array_shift($data1); // 0 index actually having no data
                         foreach($data1 as $playerid => $loop){
 
-                            if(!$playerid){
+                            if(!$playerid){ // 0 index actually having no data
                                 continue;
                             }
                             
@@ -120,7 +119,6 @@ function copa_organize_players_rankings_data($events, $teams){
             }
         }
     }
-    print_r($merged);
     if($merged){
         foreach($merged as &$m){
             arsort($m);
