@@ -91,8 +91,6 @@ function copa_organize_players_rankings_data($events, $teams){
 
             $players = get_post_meta($event->ID, 'sp_players', true);
 
-            print_r($players);
-            
             if($players){
                 foreach($players as $team_id=>$data1){
                     
@@ -149,6 +147,8 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
 
     
     $output = '<div class="row">';
+
+    print_r($data);
 
     foreach($data as $key=>$val1){
         if($val1){
