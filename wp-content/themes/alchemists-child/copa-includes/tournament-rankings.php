@@ -1,6 +1,6 @@
 <?php
 
-function copa_organize_teams_rankings_data($events, $teams){
+function copa_organize_teams_rankings_data($events, $eventids, $teams){
     $merged = array();
     if($events){
         
@@ -8,14 +8,10 @@ function copa_organize_teams_rankings_data($events, $teams){
         $merged['goalsreceived'] = array();
         $merged['assists'] = array();
         $merged['cards'] = array();
+        $merged['mvps'] = array();
         
         foreach($events as $e){
-            $event = get_post($e['id']);
             
-            if(!$event || is_wp_error($event)){
-                continue;
-            }
-
             if(
                 !in_array($e['teams'][0], $teams)
                 || !in_array($e['teams'][1], $teams)
@@ -39,22 +35,52 @@ function copa_organize_teams_rankings_data($events, $teams){
                 }
                 $merged['goalsreceived'][$team] += (int)$e['results'][$revkey];
             }
-
+        }
+        foreach($eventids as $e){
+            $event = get_post($e);
+            
+            if(!$event || is_wp_error($event)){
+                continue;
+            }
             $players = get_post_meta($event->ID, 'sp_players', true);
+            if(!$players){
+                continue;
+            }
+
+            $teamsid = array_keys($players);
+            if(
+                !in_array($teamsid[0], $teams)
+                || !in_array($teamsid[1], $teams)
+            ){
+                continue;
+            }
+
             if($players){
+                $stars = get_post_meta( $event->ID, 'sp_stars', true );
+
                 foreach($players as $team_id=>$data1){
                     if(!in_array($team_id, $teams)){
                         continue;
                     }
                     if(count($data1) > 0){
-                        array_shift($data1); // 0 index actually having no data
                         foreach($data1 as $playerid => $loop){
+                            if(!$playerid){ // 0 index actually having no data
+                                continue;
+                            }
                             if(!isset($merged['assists'][$team_id])){
                                 $merged['assists'][$team_id] = 0;
                             }
                             if(!isset($merged['cards'][$team_id])){
                                 $merged['cards'][$team_id] = 0;
                             }
+                            if(!isset($merged['mvps'][$team_id])){
+                                $merged['mvps'][$team_id] = 0;
+                            }
+
+                            if($stars && in_array($playerid, array_keys($stars))){          
+                                $merged['mvps'][$team_id] += 1;
+                            }
+
                             $merged['assists'][$team_id] += (int)$loop['assists'];
                             $merged['cards'][$team_id] += (int)$loop['yellowcards'];
                             $merged['cards'][$team_id] += (int)$loop['redcards'];
@@ -152,12 +178,14 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
     // $table = new SP_League_Table( $table_id );
     // $list = $table->data();
     $tournament = get_post_meta($table_id, 'sp_tournament', true);
-    $events = get_post_meta($tournament, 'sp_events', true);
+    
     if($mode == 'players_rankings'){
         $events = get_post_meta($tournament, 'sp_event');
         $data = copa_organize_players_rankings_data($events, $teams);
     }else{
-        $data = copa_organize_teams_rankings_data($events, $teams);
+        $events = get_post_meta($tournament, 'sp_events', true);
+        $eventids = get_post_meta($tournament, 'sp_event');
+        $data = copa_organize_teams_rankings_data($events, $eventids, $teams);
     }
     $boxestitles = array(
         'goalsgiven' => esc_html__('Goals Made', 'alchemists'),
