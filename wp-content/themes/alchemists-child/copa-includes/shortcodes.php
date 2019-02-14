@@ -175,11 +175,7 @@ function copa_trm_ranking_filter($atts = array(), $content = null){
         <div class="copa_tournaments_filter_results">
         <?php
             $table_id = (int)$tables[0]->ID;
-            if($layout_type == 'players_rankings'){
-                
-            }else{
-                copa_display_tournament_teams_rankings($table_id);
-            }
+            copa_display_tournament_teams_rankings($table_id, $layout_type);
         ?>
         </div>
     </div>
