@@ -78,6 +78,7 @@ function copa_organize_players_rankings_data($events, $teams){
         $merged['cards'] = array();
         
         foreach($events as $e){
+            var_dump($e);
             $event = get_post($e);
             $players = get_post_meta($event->ID, 'sp_players', true);
             if(!$players){
