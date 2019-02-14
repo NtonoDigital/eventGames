@@ -89,7 +89,7 @@ function copa_organize_players_rankings_data($events, $teams){
 
 
             $players = get_post_meta($event->ID, 'sp_players', true);
-print_r($players);
+// print_r($players);
             if($players){
                 foreach($players as $team_id=>$data1){
                     
@@ -136,7 +136,9 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
     $tournament = get_post_meta($table_id, 'sp_tournament', true);
     $events = get_post_meta($tournament, 'sp_events', true);
     if($mode == 'players_rankings'){
-        $data = copa_organize_players_rankings_data($events, $teams);
+        $events = get_post_meta($tournament, 'sp_events');
+        print_r($events);
+        // $data = copa_organize_players_rankings_data($events, $teams);
     }else{
         $data = copa_organize_teams_rankings_data($events, $teams);
     }
