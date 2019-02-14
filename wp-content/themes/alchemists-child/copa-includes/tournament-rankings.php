@@ -97,6 +97,8 @@ function copa_organize_players_rankings_data($events, $teams){
                     if(count($data1) > 0){
                         array_shift($data1); // 0 index actually having no data
                         foreach($data1 as $playerid => $loop){
+
+                            var_dump($playerid);
                             if(!isset($merged['goalsgiven'][$playerid])){
                                 $merged['goalsgiven'][$playerid] = 0;
                             }
@@ -147,8 +149,6 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
 
     
     $output = '<div class="row">';
-
-    print_r($data);
 
     foreach($data as $key=>$val1){
         if($val1){
