@@ -92,6 +92,8 @@ foreach($results as $result){
         $all_goals[] = $goals = (int)$stat['goals'];
         
         $name = $team->post_title;
+        var_dump($name);
+        echo "<-->";
         $logo = '';
         if ( has_post_thumbnail( $team->ID ) ){
 			$logo = get_the_post_thumbnail( $team->ID, 'sportspress-fit-icon' );
