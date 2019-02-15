@@ -74,7 +74,7 @@ foreach($results as $result){
 
         $team = get_post((int)$teamid);
         
-        var_dump($stat);
+        // var_dump($stat);
 
         /*if(!isset($stat['firsthalf']) || !is_numeric($stat['firsthalf'])){
             $stat['firsthalf'] = 0;
@@ -82,7 +82,10 @@ foreach($results as $result){
         if(!isset($stat['secondhalf']) || !is_numeric($stat['secondhalf'])){
             $stat['secondhalf'] = 0;
         }*/
-        if(!isset($stat['goals']) || !is_numeric($stat['goals'])){
+        if(!isset($stat['goals'])){
+            continue;
+        }
+        if(!is_numeric($stat['goals'])){
             $stat['goals'] = 0;
         }
         // $all_goals[] = $goals = (int)$stat['firsthalf']+(int)$stat['secondhalf'];
