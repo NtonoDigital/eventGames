@@ -211,9 +211,6 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
 
     foreach($data as $key=>$val1){
         if($val1){
-            if($count % 3 == 0){
-                $output .= '</div><div class="row">';
-            }
             $output .= '<div class="col-md-4 col-sm-6 col-xs-12">';
             $output .= '<div class="widget card card--has-table widget-leaders">';
             $output .= '<div class="widget__title card__header">';
@@ -255,6 +252,9 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
             $output .= '</div>';
             $output .= '</div>';
             $output .= '</div>';
+            if($count % 3 == 0 && $count < count($data)){
+                $output .= '</div><div class="row">';
+            }
             $count++;
         }
     }
