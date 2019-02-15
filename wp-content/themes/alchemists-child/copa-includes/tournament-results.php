@@ -48,23 +48,11 @@ $the_tournament = get_post($sp_tournament);
 
 foreach($results as $result){
     
-    $output .= '<tr>';
-
     $table = new SP_Event((int)$result->meta_value);
-    
     $data = $table->results();
-
-    $match_date = $table->day();
-
-    $output .= '<td class="data-day" data-label="'.esc_attr__('Match Day', 'alchemists').'">';
-    $output .= $match_date;
-    $output .= '</td>';
-
-    $counter = 0;
-
-    $output .= '<td class="data-event" data-label="'.esc_attr__('Event', 'alchemists').'">';
-
     $all_goals = array();
+    $counter = 0;
+    $goalscol = '';
 
     foreach($data as $teamid=>$stat){
         
@@ -74,6 +62,13 @@ foreach($results as $result){
 
         $team = get_post((int)$teamid);
         
+        $name = $team->post_title;
+
+        if(strtolower($name) == 'no equipo'){
+            continue 2;
+        }
+        
+
         // var_dump($stat);
 
         /*if(!isset($stat['firsthalf']) || !is_numeric($stat['firsthalf'])){
@@ -91,34 +86,38 @@ foreach($results as $result){
         // $all_goals[] = $goals = (int)$stat['firsthalf']+(int)$stat['secondhalf'];
         $all_goals[] = $goals = (int)$stat['goals'];
         
-        $name = $team->post_title;
-        if($name == 'No equipo'){
-        var_dump($team);
-        var_dump($stat);
-        var_dump($name);
-        echo "<br>";
-        }
         $logo = '';
         if ( has_post_thumbnail( $team->ID ) ){
 			$logo = get_the_post_thumbnail( $team->ID, 'sportspress-fit-icon' );
         }
         if($counter == 0){
-            $output .= '<span class="team-title">'.$name.'</span>&nbsp;&nbsp;';
+            $goalscol .= '<span class="team-title">'.$name.'</span>&nbsp;&nbsp;';
             if($logo){
-                $output .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
+                $goalscol .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
             }
-            $output .= '<span class="team-goals">'.$goals.'</span>';
-            $output .= '-';
+            $goalscol .= '<span class="team-goals">'.$goals.'</span>';
+            $goalscol .= '-';
         }else{
-            $output .= '<span class="team-goals">'.$goals.'</span>&nbsp;&nbsp;';
+            $goalscol .= '<span class="team-goals">'.$goals.'</span>&nbsp;&nbsp;';
             if($logo){
-                $output .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
+                $goalscol .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
             }
-            $output .= '<span class="team-title">'.$name.'</span>';
+            $goalscol .= '<span class="team-title">'.$name.'</span>';
         }
 
         $counter++;
     }
+
+    $match_date = $table->day();
+
+    $output .= '<tr>';
+
+    $output .= '<td class="data-day" data-label="'.esc_attr__('Match Day', 'alchemists').'">';
+    $output .= $match_date;
+    $output .= '</td>';
+
+    $output .= '<td class="data-event" data-label="'.esc_attr__('Event', 'alchemists').'">';
+    $output .= $goalscol;
     $output .= '</td>';
 
     $output .= '<td class="data-result" data-label="'.esc_attr__('Result', 'alchemists').'">';
