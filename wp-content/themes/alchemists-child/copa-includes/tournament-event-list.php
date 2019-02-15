@@ -200,6 +200,8 @@ $identifier = uniqid( 'eventlist_' );
 					if ( is_numeric( $number ) && $number > 0 )
 						$limit = $number;
 
+					var_dump($data);
+
 					foreach ( $data as $event ):
 						$event = get_post((int)$event->meta_value);
 
