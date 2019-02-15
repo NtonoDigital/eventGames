@@ -70,10 +70,11 @@ Template: alchemists
     border-radius: 50%;
     background: #ccc;
     position: relative;
-    padding: 15px 22px;
+    padding: 14px 0;
     color: #fff;
     font-size: 15px;
-    left: 0px;
+    width: 50px;
+    display: inline-block;
 }
 .copa_tournaments_filter tbody tr td.rounded-col span:before {
     content: "";
