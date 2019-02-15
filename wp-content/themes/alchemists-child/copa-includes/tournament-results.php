@@ -36,7 +36,7 @@ $output .= '<div class="card__content">';
 
 $output .= '<div class="table-responsive sp-table-wrapper">';
 
-$output .= '<table class="table table-hover table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' . $identifier : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
+$output .= '<table class="table table-hover table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
 
 $output .= '<th>'.esc_html__('Match Day', 'alchemists').'</th>';
 $output .= '<th>'.esc_html__('Event', 'alchemists').'</th>';
@@ -74,10 +74,10 @@ foreach($results as $result){
 
         $team = get_post((int)$teamid);
         
-        if(!is_numeric($stat['firsthalf'])){
+        if(!isset($stat['firsthalf']) || !is_numeric($stat['firsthalf'])){
             $stat['firsthalf'] = 0;
         }
-        if(!is_numeric($stat['secondhalf'])){
+        if(!isset($stat['secondhalf']) || !is_numeric($stat['secondhalf'])){
             $stat['secondhalf'] = 0;
         }
         $all_goals[] = $goals = (int)$stat['firsthalf']+(int)$stat['secondhalf'];
