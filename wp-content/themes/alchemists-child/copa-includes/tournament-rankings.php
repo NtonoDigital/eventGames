@@ -107,6 +107,7 @@ function copa_organize_players_rankings_data($events, $teams){
         $merged['assists'] = array();
         $merged['cards'] = array();
         $merged['mvps'] = array();
+        $merged['saves'] = array();
         
         foreach($events as $e){
             $event = get_post($e);
@@ -153,6 +154,13 @@ function copa_organize_players_rankings_data($events, $teams){
                             if(!isset($merged['cards'][$playerid])){
                                 $merged['cards'][$playerid] = 0;
                             }
+                            if(!isset($merged['saves'][$playerid])){
+                                $merged['saves'][$playerid] = 0;
+                            }
+                            if(isset($loop['saves']) && $loop['saves']){
+                                $merged['saves'][$playerid] += (int)$loop['saves'];
+                            }
+
                             $merged['goalsgiven'][$playerid] += (int)$loop['goals'];
                             $merged['assists'][$playerid] += (int)$loop['assists'];
                             $merged['cards'][$playerid] += (int)$loop['redcards'];
@@ -193,6 +201,7 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
         'assists' => esc_html__('Assists', 'alchemists'),
         'cards' => esc_html__('Cards', 'alchemists'),
         'mvps' => esc_html__('MVP', 'alchemists'),
+        'saves' => esc_html__('Goalie', 'alchemists'),
     );
 
     
