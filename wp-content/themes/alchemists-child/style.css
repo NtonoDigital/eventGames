@@ -58,3 +58,32 @@ Template: alchemists
 #content .wpb_text_column .copa_tournaments_filter .widget.card {
     margin-bottom: 15px;
 }
+.copa_tournaments_filter table > tbody > tr td.rounded-col{
+    position: relative;
+    padding: 0;
+    text-align: center;
+}
+.copa_tournaments_filter .team-leader .team-leader__player{
+    padding-left: 0;
+}
+.copa_tournaments_filter td.rounded-col span {
+    border-radius: 50%;
+    background: #ccc;
+    position: relative;
+    padding: 15px 22px;
+    color: #fff;
+    font-size: 15px;
+    left: 0px;
+}
+.copa_tournaments_filter tbody tr td.rounded-col span:before {
+    content: "";
+    background: #ccc;
+    width: 2px;
+    position: absolute;
+    top: -25px;
+    height: 40px;
+    left: 25px;
+}
+.copa_tournaments_filter tbody tr:first-child td.rounded-col span:before{
+    content: none;
+}
