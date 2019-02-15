@@ -203,8 +203,9 @@ $identifier = uniqid( 'eventlist_' );
 					foreach ( $data as $event ):
 						$event = get_post((int)$event->meta_value);
 
-						var_dump($event);
-
+						if(!$event){
+							continue;
+						}
 						if ( isset( $limit ) && $i >= $limit ) continue;
 
 						$teams = get_post_meta( $event->ID, 'sp_team' );
