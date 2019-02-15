@@ -54,10 +54,6 @@ foreach($results as $result){
     
     $data = $table->results();
 
-    var_dump($data);
-
-    return;
-
     $match_date = $table->day();
 
     $output .= '<td class="data-day" data-label="'.esc_attr__('Match Day', 'alchemists').'">';
@@ -72,7 +68,7 @@ foreach($results as $result){
 
     foreach($data as $teamid=>$stat){
         
-        if($counter > 1){
+        if(!$teamid){
             continue;
         }
 
