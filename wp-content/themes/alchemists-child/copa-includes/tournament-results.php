@@ -74,6 +74,8 @@ foreach($results as $result){
 
         $team = get_post((int)$teamid);
         
+        var_dump($stats);
+
         /*if(!isset($stat['firsthalf']) || !is_numeric($stat['firsthalf'])){
             $stat['firsthalf'] = 0;
         }
