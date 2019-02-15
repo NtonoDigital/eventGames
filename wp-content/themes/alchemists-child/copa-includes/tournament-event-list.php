@@ -222,7 +222,11 @@ $identifier = uniqid( 'eventlist_' );
 						if ( $teams ):
 							foreach ( $teams as $t => $team ):
 								$name = sp_team_short_name( $team );
-								var_dump($name);
+								
+								if(strtolower($name) == 'no equipo'){
+									continue 2;
+								}
+								
 								if ( $name ):
 
 									$name = '<meta itemprop="name" content="' . $name . '">' . $name;
