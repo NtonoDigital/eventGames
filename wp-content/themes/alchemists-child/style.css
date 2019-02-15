@@ -55,3 +55,6 @@ Template: alchemists
     border-radius: 50%;
 }
 
+#content .wpb_text_column .copa_tournaments_filter .widget.card {
+    margin-bottom: 15px;
+}
