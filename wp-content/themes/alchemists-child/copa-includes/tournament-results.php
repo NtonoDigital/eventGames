@@ -82,7 +82,7 @@ foreach($results as $result){
         if(!isset($stat['secondhalf']) || !is_numeric($stat['secondhalf'])){
             $stat['secondhalf'] = 0;
         }*/
-        if(!isset($stat['goals'])){
+        if(!isset($stat['goals']) || !isset($stat['firsthalf']) || isset($stat['secondhalf'])){
             continue;
         }
         if(!is_numeric($stat['goals'])){
