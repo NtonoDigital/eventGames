@@ -51,9 +51,12 @@ foreach($results as $result){
     $output .= '<tr>';
 
     $table = new SP_Event((int)$result->meta_value);
-    var_dump($result->meta_value);
-
+    
     $data = $table->results();
+
+    var_dump($data);
+
+    return;
 
     $match_date = $table->day();
 
