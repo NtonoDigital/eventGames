@@ -328,6 +328,8 @@ function copa_trm_results_filter($atts = array(), $content = null){
 
     $sp_tournament = $temptr->ID;
 
+    var_dump($results);
+
     $results = array_shift($results);
     $tseasons = array_shift($tseasons);
 
