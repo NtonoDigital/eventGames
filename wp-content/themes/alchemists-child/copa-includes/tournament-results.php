@@ -47,7 +47,8 @@ $output .= '</tr></thead><tbody>';
 $the_tournament = get_post($sp_tournament);
 
 foreach($results as $result){
-
+    var_dump($result);
+    
     $output .= '<tr>';
 
     $table = new SP_Event((int)$result->meta_value);
