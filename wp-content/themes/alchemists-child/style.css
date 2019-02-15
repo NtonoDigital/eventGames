@@ -62,6 +62,10 @@ Template: alchemists
     position: relative;
     padding: 0;
     text-align: center;
+    z-index: 0;
+}
+.copa_tournaments_filter table > tbody > tr:first-child td.rounded-col {
+    z-index: 9;
 }
 .copa_tournaments_filter .team-leader .team-leader__player{
     padding-left: 0;
@@ -78,6 +82,7 @@ Template: alchemists
 }
 .copa_tournaments_filter tbody tr:first-child td.rounded-col span{
     background: #fff100;
+    color: #666;
 }
 .copa_tournaments_filter tbody tr td.rounded-col span:before {
     content: "";
