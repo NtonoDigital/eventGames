@@ -87,7 +87,8 @@
         $('[name="results_sp_tournament"]').on('change', function(e){
             var $this = $(this);
             var data = {
-                sp_tournament: $this.children('option:selected').val()
+                sp_tournament: $this.children('option:selected').val(),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
             };
             displayLoader($this);
             doAjax(data, function(resp){
@@ -110,7 +111,7 @@
             var data = {
                 sp_tournament: $this.closest('.copa_tournaments_filter_inputs').find('[name="results_sp_tournament"] option:selected').val(),
                 sp_season: $this.children('option:selected').val(),
-                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype'),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
             };
             displayLoader($this);
             doAjax(data, function(resp){
