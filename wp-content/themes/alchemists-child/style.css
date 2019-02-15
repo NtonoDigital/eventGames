@@ -76,6 +76,9 @@ Template: alchemists
     width: 50px;
     display: inline-block;
 }
+.copa_tournaments_filter tbody tr:first-child td.rounded-col span{
+    background: #fff100;
+}
 .copa_tournaments_filter tbody tr td.rounded-col span:before {
     content: "";
     background: #ccc;
