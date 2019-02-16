@@ -331,6 +331,7 @@ $identifier = uniqid( 'eventlist_' );
 									if ( sp_column_active( $usecolumns, 'event' ) ) {
 										if ( $title_format == 'teams' ) {
 											echo '<td class="data-event data-teams" data-label="' . esc_attr__( 'Teams', 'sportspress' ) . '">' . $teams_output . '</td>';
+											var_dump($teams_output);
 										} else {
 											$title_html = implode( ' ', $team_logos ) . ' ' . $event->post_title;
 											if ( $link_events ) $title_html = '<a href="' . get_post_permalink( $event->ID, false, true ) . '" itemprop="url">' . $title_html . '</a>';
