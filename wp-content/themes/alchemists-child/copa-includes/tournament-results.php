@@ -105,6 +105,10 @@ foreach($results as $result){
         $counter++;
     }
 
+    if(!$goalscol){
+        continue;
+    }
+
     $match_date = $table->day();
 
     if(!$match_date){
