@@ -270,8 +270,12 @@ $identifier = uniqid( 'eventlist_' );
 								endif;
 							endforeach;
 						else:
-							$teams_output .= '&mdash;';
+							// $teams_output .= '&mdash;';
 						endif;
+
+						if(!$team_output){
+							continue;
+						}
 
 						echo '<tr class="sp-row sp-post' . ( $i % 2 == 0 ? ' alternate' : '' ) . ' sp-row-no-' . $i . '" itemscope itemtype="http://schema.org/SportsEvent">';
 
