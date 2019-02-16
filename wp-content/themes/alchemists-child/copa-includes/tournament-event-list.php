@@ -221,15 +221,17 @@ $identifier = uniqid( 'eventlist_' );
 
 						if ( $teams ):
 							
-							if(count($teams) > 2){
-								var_dump($teams);
-							}
+							$checksets = array();
 
 							foreach ( $teams as $t => $team ):
 								$name = sp_team_short_name( $team );
 								
 								if(strtolower($name) == 'no equipo'){
 									continue 2;
+								}
+
+								if($t > 1){
+									break;
 								}
 								
 								if ( $name ):
