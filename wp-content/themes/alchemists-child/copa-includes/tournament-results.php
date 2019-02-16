@@ -48,6 +48,8 @@ $the_tournament = get_post($sp_tournament);
 
 foreach($results as $result){
     
+    $event = get_post((int)$result->meta_value);
+
     $table = new SP_Event((int)$result->meta_value);
     $data = $table->results();
     $all_goals = array();
@@ -100,6 +102,13 @@ foreach($results as $result){
     }
 
     $match_date = $table->day();
+
+    if(!$match_date){
+
+        $match_date = '<date>' . get_post_time( 'Y-m-d H:i:s', false, $event ) . '</date>' . apply_filters( 'sportspress_event_date', get_post_time( get_option( 'date_format' ), false, $event, true ), $event->ID );
+
+    }
+    $match_date = '<a href="'.get_permalink($event->ID).'" itemprop="url">'.$match_date.'</a>';
 
     $output .= '<tr>';
 
