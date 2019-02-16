@@ -7,9 +7,7 @@ foreach ( $data as $team_id => $row ){
 
     $name = get_the_title((int)$team_id);
 
-    var_dump(strtolower($name));
-
-    if(!$name || in_array(strtolower($name), array('equipo', 'no equipo'))){
+    if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
         continue;
     }
 
