@@ -65,7 +65,7 @@ foreach($results as $result){
         $name = $team->post_title;
 
         if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
-            continue 2;
+            continue;
         }
         
         if(!isset($stat['goals'])){
