@@ -4,6 +4,11 @@ $table = new SP_League_Table( $id );
 $data = $table->data();
 $output = '';
 foreach ( $data as $team_id => $row ){
+
+    var_dump($team_id);
+    var_dump($row);
+    echo "--><br>";
+
     $output .= '<dl class="gallery-item"><dt class="gallery-icon portrait">';
     $permalink = get_permalink((int)$team_id);
     $name = get_the_title((int)$team_id);
