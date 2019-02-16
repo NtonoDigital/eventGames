@@ -227,6 +227,9 @@ $identifier = uniqid( 'eventlist_' );
 								/*if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
 									continue 2;
 								}*/
+								if(!$name || in_array(strtolower($name), array('no equipo'))){
+									continue 2;
+								}
 								
 								if($t > 1){
 									break;
