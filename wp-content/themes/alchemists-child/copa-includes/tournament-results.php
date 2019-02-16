@@ -109,7 +109,7 @@ foreach($results as $result){
 
     if(!$match_date){
 
-        $match_date = '<date>' . get_post_time( 'Y-m-d H:i:s', false, $event ) . '</date>' . apply_filters( 'sportspress_event_date', get_post_time( get_option( 'date_format' ), false, $event, true ), $event->ID );
+        $match_date = apply_filters( 'sportspress_event_date', get_post_time( get_option( 'date_format' ), false, $event, true ), $event->ID );
 
     }
     $match_date = '<a href="'.get_permalink($event->ID).'" itemprop="url">'.$match_date.'</a>';
