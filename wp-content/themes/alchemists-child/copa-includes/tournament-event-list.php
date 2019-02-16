@@ -206,6 +206,10 @@ $identifier = uniqid( 'eventlist_' );
 						if(!$event){
 							continue;
 						}
+						if(!$event->post_title){
+							continue;
+						}
+
 						if ( isset( $limit ) && $i >= $limit ) continue;
 
 						$teams = get_post_meta( $event->ID, 'sp_team' );
@@ -272,12 +276,6 @@ $identifier = uniqid( 'eventlist_' );
 						else:
 							// $teams_output .= '&mdash;';
 						endif;
-
-						var_dump($team_output);
-						if(!$team_output){
-							
-							continue;
-						}
 
 						echo '<tr class="sp-row sp-post' . ( $i % 2 == 0 ? ' alternate' : '' ) . ' sp-row-no-' . $i . '" itemscope itemtype="http://schema.org/SportsEvent">';
 
