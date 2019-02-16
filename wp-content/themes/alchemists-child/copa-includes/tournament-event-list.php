@@ -274,6 +274,7 @@ $identifier = uniqid( 'eventlist_' );
 						endif;
 
 						if(!$team_output){
+							var_dump($team_output);
 							continue;
 						}
 
