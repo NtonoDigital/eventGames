@@ -36,7 +36,7 @@ $output .= '<div class="card__content">';
 
 $output .= '<div class="table-responsive sp-table-wrapper">';
 
-$output .= '<table class="table table-hover table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
+$output .= '<table class="table table-hover team-schedule table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
 
 $output .= '<th>'.esc_html__('Date', 'alchemists').'</th>';
 $output .= '<th>'.esc_html__('Event', 'alchemists').'</th>';
