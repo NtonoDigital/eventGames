@@ -64,26 +64,17 @@ foreach($results as $result){
         
         $name = $team->post_title;
 
-        if(strtolower($name) == 'no equipo'){
+        if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
             continue 2;
         }
         
-
-        // var_dump($stat);
-
-        /*if(!isset($stat['firsthalf']) || !is_numeric($stat['firsthalf'])){
-            $stat['firsthalf'] = 0;
-        }
-        if(!isset($stat['secondhalf']) || !is_numeric($stat['secondhalf'])){
-            $stat['secondhalf'] = 0;
-        }*/
         if(!isset($stat['goals'])){
             continue;
         }
         if(!is_numeric($stat['goals'])){
             $stat['goals'] = 0;
         }
-        // $all_goals[] = $goals = (int)$stat['firsthalf']+(int)$stat['secondhalf'];
+        
         $all_goals[] = $goals = (int)$stat['goals'];
         
         $logo = '';

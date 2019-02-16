@@ -224,10 +224,10 @@ $identifier = uniqid( 'eventlist_' );
 							foreach ( $teams as $t => $team ):
 								$name = sp_team_short_name( $team );
 								
-								if(strtolower($name) == 'no equipo'){
+								if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
 									continue 2;
 								}
-
+								
 								if($t > 1){
 									break;
 								}
