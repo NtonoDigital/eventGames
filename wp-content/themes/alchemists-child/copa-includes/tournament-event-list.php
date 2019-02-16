@@ -206,10 +206,7 @@ $identifier = uniqid( 'eventlist_' );
 						if(!$event){
 							continue;
 						}
-						if(!$event->post_title){
-							continue;
-						}
-
+						
 						if ( isset( $limit ) && $i >= $limit ) continue;
 
 						$teams = get_post_meta( $event->ID, 'sp_team' );
@@ -277,6 +274,10 @@ $identifier = uniqid( 'eventlist_' );
 							// $teams_output .= '&mdash;';
 						endif;
 
+						if(!$teams_output){
+							continue;
+						}
+
 						echo '<tr class="sp-row sp-post' . ( $i % 2 == 0 ? ' alternate' : '' ) . ' sp-row-no-' . $i . '" itemscope itemtype="http://schema.org/SportsEvent">';
 
 						$date_html = '<date>' . get_post_time( 'Y-m-d H:i:s', false, $event ) . '</date>' . apply_filters( 'sportspress_event_date', get_post_time( get_option( 'date_format' ), false, $event, true ), $event->ID );
@@ -331,7 +332,6 @@ $identifier = uniqid( 'eventlist_' );
 									if ( sp_column_active( $usecolumns, 'event' ) ) {
 										if ( $title_format == 'teams' ) {
 											echo '<td class="data-event data-teams" data-label="' . esc_attr__( 'Teams', 'sportspress' ) . '">' . $teams_output . '</td>';
-											var_dump($teams_output);
 										} else {
 											$title_html = implode( ' ', $team_logos ) . ' ' . $event->post_title;
 											if ( $link_events ) $title_html = '<a href="' . get_post_permalink( $event->ID, false, true ) . '" itemprop="url">' . $title_html . '</a>';
