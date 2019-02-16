@@ -116,7 +116,7 @@ foreach($results as $result){
 
     $output .= '<tr>';
 
-    $output .= '<td class="data-day" data-label="'.esc_attr__('Date', 'alchemists').'">';
+    $output .= '<td class="date-date" data-label="'.esc_attr__('Date', 'alchemists').'">';
     $output .= $match_date;
     $output .= '</td>';
 
