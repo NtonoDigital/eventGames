@@ -38,9 +38,9 @@ $output .= '<div class="table-responsive sp-table-wrapper">';
 
 $output .= '<table class="table table-hover table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
 
-$output .= '<th>'.esc_html__('Match Day', 'alchemists').'</th>';
+$output .= '<th>'.esc_html__('Date', 'alchemists').'</th>';
 $output .= '<th>'.esc_html__('Event', 'alchemists').'</th>';
-$output .= '<th>'.esc_html__('Result', 'alchemists').'</th>';
+$output .= '<th>'.esc_html__('Results', 'alchemists').'</th>';
 $output .= '<th>'.esc_html__('League', 'alchemists').'</th>';
 $output .= '</tr></thead><tbody>';
 
@@ -103,7 +103,7 @@ foreach($results as $result){
 
     $output .= '<tr>';
 
-    $output .= '<td class="data-day" data-label="'.esc_attr__('Match Day', 'alchemists').'">';
+    $output .= '<td class="data-day" data-label="'.esc_attr__('Date', 'alchemists').'">';
     $output .= $match_date;
     $output .= '</td>';
 
@@ -111,7 +111,7 @@ foreach($results as $result){
     $output .= $goalscol;
     $output .= '</td>';
 
-    $output .= '<td class="data-result" data-label="'.esc_attr__('Result', 'alchemists').'">';
+    $output .= '<td class="data-result" data-label="'.esc_attr__('Results', 'alchemists').'">';
     $output .= implode(' - ', $all_goals);
     $output .= '</td>';
     
