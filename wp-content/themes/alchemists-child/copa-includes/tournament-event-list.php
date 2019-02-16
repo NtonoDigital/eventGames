@@ -220,6 +220,11 @@ $identifier = uniqid( 'eventlist_' );
 						$team_logos = array();
 
 						if ( $teams ):
+							
+							if(count($teams) > 2){
+								var_dump($teams);
+							}
+
 							foreach ( $teams as $t => $team ):
 								$name = sp_team_short_name( $team );
 								
