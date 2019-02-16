@@ -5,13 +5,15 @@ $data = $table->data();
 $output = '';
 foreach ( $data as $team_id => $row ){
 
-    var_dump($team_id);
-    var_dump($row);
-    echo "--><br>";
+    $name = get_the_title((int)$team_id);
+
+    if(!$name || in_array(strtolower($name), array('equipo', 'no equipo'))){
+        continue;
+    }
 
     $output .= '<dl class="gallery-item"><dt class="gallery-icon portrait">';
     $permalink = get_permalink((int)$team_id);
-    $name = get_the_title((int)$team_id);
+    
     if(has_post_thumbnail((int)$team_id)){
         $output .= '<a href="'.$permalink.'" title="'.$name.'">'.get_the_post_thumbnail((int)$team_id, 'sportspress-fit-medium').'</a>';
     }
