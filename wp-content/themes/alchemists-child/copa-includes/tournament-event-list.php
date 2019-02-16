@@ -221,8 +221,6 @@ $identifier = uniqid( 'eventlist_' );
 
 						if ( $teams ):
 							
-							$checksets = array();
-
 							foreach ( $teams as $t => $team ):
 								$name = sp_team_short_name( $team );
 								
