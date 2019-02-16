@@ -50,6 +50,10 @@ foreach($results as $result){
     
     $event = get_post((int)$result->meta_value);
 
+    if(!$event){
+        continue;
+    }
+
     $table = new SP_Event((int)$result->meta_value);
     $data = $table->results();
     $all_goals = array();
