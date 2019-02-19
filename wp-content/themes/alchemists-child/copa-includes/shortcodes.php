@@ -337,7 +337,7 @@ function copa_trm_results_filter($atts = array(), $content = null){
         <div class="filter-loading hidden"><span></span></div>
         <div class="copa_tournaments_filter_inputs">
             <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-4 col-xs-12">
                     <select name="results_sp_tournament">
                         <?php 
                         if(!empty($tournaments) && !is_wp_error($tournaments)){
@@ -347,11 +347,17 @@ function copa_trm_results_filter($atts = array(), $content = null){
                         <?php }}?>
                     </select>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-4 col-xs-12">
                     <select name="results_sp_season">
                         <?php foreach($tseasons as $t){?>
                         <option value="<?php echo $t->term_id?>"><?php echo $t->name?></option>
                         <?php }?>
+                    </select>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <select name="results_sp_orderway">
+                        <option value="0"><?php esc_html_e('Ascending', 'alchemists')?></option>
+                        <option value="1"><?php esc_html_e('Decending', 'alchemists')?></option>
                     </select>
                 </div>
             </div>

@@ -121,6 +121,22 @@
                 hideLoader($this);
             });
         });
+        $('[name="results_sp_orderway"]').on('change', function(e){
+            var $this = $(this);
+            var data = {
+                sp_tournament: $this.closest('.copa_tournaments_filter_inputs').find('[name="results_sp_tournament"] option:selected').val(),
+                sp_tournament: $this.closest('.copa_tournaments_filter_inputs').find('[name="results_sp_season"] option:selected').val(),
+                orderway: $this.children('option:selected').val(),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
+            };
+            displayLoader($this);
+            doAjax(data, function(resp){
+                var $html = '',
+                $content = $this.closest('.copa_tournaments_filter_inputs').siblings('.copa_tournaments_filter_results');
+                $content.html(resp);
+                hideLoader($this);
+            });
+        });
         /* Team players */
         $('[name="copa_sp_list"]').on('change', function(e){
             var $this = $(this);
