@@ -127,7 +127,7 @@
             var $this = $(this);
             var data = {
                 sp_tournament: $this.closest('.copa_tournaments_filter_inputs').find('[name="results_sp_tournament"] option:selected').val(),
-                sp_tournament: $this.closest('.copa_tournaments_filter_inputs').find('[name="results_sp_season"] option:selected').val(),
+                sp_season: $this.closest('.copa_tournaments_filter_inputs').find('[name="results_sp_season"] option:selected').val(),
                 orderway: $this.children('option:selected').val(),
                 criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
             };
