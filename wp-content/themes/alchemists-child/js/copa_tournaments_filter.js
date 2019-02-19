@@ -113,13 +113,15 @@
                 sp_season: $this.children('option:selected').val(),
                 criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
             };
-            displayLoader($this);
+            var $field = $this.closest('.copa_tournaments_filter_inputs').find('[name="results_sp_orderway"]');
+            $field.trigger('change');
+            /*displayLoader($this);
             doAjax(data, function(resp){
                 var $html = '',
                 $content = $this.closest('.copa_tournaments_filter_inputs').siblings('.copa_tournaments_filter_results');
                 $content.html(resp);
                 hideLoader($this);
-            });
+            });*/
         });
         $('[name="results_sp_orderway"]').on('change', function(e){
             var $this = $(this);
