@@ -68,6 +68,10 @@ foreach($results as $result){
 
         $team = get_post((int)$teamid);
         
+        if(!$team){
+            continue;
+        }
+
         $name = $team->post_title;
 
         if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
