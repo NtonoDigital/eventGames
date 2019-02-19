@@ -48,7 +48,7 @@ function copa_load_filter_vars()
                 switch($_POST['criteria']){
                     case 'results':
                     case 'calender':
-                        $sql = $wpdb->prepare("SELECT pm.meta_value FROM wp2_postmeta pm 
+                        $sql = $wpdb->prepare("SELECT ID AS meta_value FROM wp2_posts WHERE ID IN(SELECT pm.meta_value FROM wp2_postmeta pm 
                         INNER JOIN wp2_posts p ON pm.post_id=p.ID 
                         WHERE p.post_type='sp_tournament' 
                         AND p.post_status='publish'
@@ -56,7 +56,7 @@ function copa_load_filter_vars()
                         AND p.ID IN(SELECT tr.object_id FROM wp2_term_relationships tr 
                                     INNER JOIN wp2_term_taxonomy tt ON tr.term_taxonomy_id=tt.term_taxonomy_id
                                     INNER JOIN wp2_terms t ON tt.term_id=t.term_id
-                                    WHERE tr.object_id=%d AND t.term_id=%d) ORDER BY p.post_date ASC", $sp_tournament, $sp_season);
+                                    WHERE tr.object_id=%d AND t.term_id=%d)) ORDER BY post_date ASC", $sp_tournament, $sp_season);
                         $results = $wpdb->get_results($sql);
                         if($results && !is_wp_error($results)){
                             $layout_type = isset($_POST['criteria']) && $_POST['criteria'] ? $_POST['criteria'] : 'calender';
