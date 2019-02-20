@@ -68,22 +68,25 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams){
                                 continue;
                             }
                             if(!isset($merged['assists'][$team_id])){
-                                $merged['assists'][$team_id] = 0;
+                                $merged['assists'][$team_id] = array('played'=>0, 'value'=> 0);
                             }
                             if(!isset($merged['cards'][$team_id])){
-                                $merged['cards'][$team_id] = 0;
+                                $merged['cards'][$team_id] = array('played'=>0, 'value'=> 0);
                             }
                             if(!isset($merged['mvps'][$team_id])){
-                                $merged['mvps'][$team_id] = 0;
+                                $merged['mvps'][$team_id] = array('played'=>0, 'value'=> 0);
                             }
 
                             if($stars && in_array($playerid, array_keys($stars))){          
-                                $merged['mvps'][$team_id] += 1;
+                                $merged['mvps'][$team_id]['value'] += 1;
+                                $merged['mvps'][$team_id]['played'] += 1;
                             }
 
-                            $merged['assists'][$team_id] += (int)$loop['assists'];
-                            $merged['cards'][$team_id] += (int)$loop['yellowcards'];
-                            $merged['cards'][$team_id] += (int)$loop['redcards'];
+                            $merged['assists'][$team_id]['value'] += (int)$loop['assists'];
+                            $merged['assists'][$team_id]['played'] += 1;
+                            $merged['cards'][$team_id]['played'] += 1;
+                            $merged['cards'][$team_id]['value'] += (int)$loop['yellowcards'];
+                            $merged['cards'][$team_id]['value'] += (int)$loop['redcards'];
                         }
                     }
                     
@@ -93,10 +96,16 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams){
     }
     if($merged){
         foreach($merged as &$m){
-            arsort($m);
+            usort($m, 'copa_sort_rankings');
         }
     }
     return $merged;
+}
+function copa_sort_rankings($a, $b){
+    if ($a['value'] == $b['value']) {
+        return 0;
+    }
+    return ($a['value'] < $b['value']) ? 1 : -1;
 }
 
 function copa_organize_players_rankings_data($events, $teams){
@@ -146,24 +155,28 @@ function copa_organize_players_rankings_data($events, $teams){
                                 continue;
                             }
                             if(!isset($merged['goalsgiven'][$playerid])){
-                                $merged['goalsgiven'][$playerid] = 0;
+                                $merged['goalsgiven'][$playerid] = array('played'=>0, 'value'=> 0);
                             }
                             if(!isset($merged['assists'][$playerid])){
-                                $merged['assists'][$playerid] = 0;
+                                $merged['assists'][$playerid] = array('played'=>0, 'value'=> 0);
                             }
                             if(!isset($merged['cards'][$playerid])){
-                                $merged['cards'][$playerid] = 0;
+                                $merged['cards'][$playerid] = array('played'=>0, 'value'=> 0);
                             }
                             if(!isset($merged['saves'][$playerid])){
-                                $merged['saves'][$playerid] = 0;
+                                $merged['saves'][$playerid] = array('played'=>0, 'value'=> 0);
                             }
                             if(isset($loop['saves']) && $loop['saves']){
-                                $merged['saves'][$playerid] += (int)$loop['saves'];
+                                $merged['saves'][$playerid]['value'] += (int)$loop['saves'];
+                                $merged['saves'][$playerid]['played'] += 1;
                             }
 
-                            $merged['goalsgiven'][$playerid] += (int)$loop['goals'];
-                            $merged['assists'][$playerid] += (int)$loop['assists'];
-                            $merged['cards'][$playerid] += (int)$loop['redcards'];
+                            $merged['goalsgiven'][$playerid]['value'] += (int)$loop['goals'];
+                            $merged['assists'][$playerid]['value'] += (int)$loop['assists'];
+                            $merged['cards'][$playerid]['value'] += (int)$loop['redcards'];
+                            $merged['goalsgiven'][$playerid]['played'] += 1;
+                            $merged['assists'][$playerid]['played'] += 1;
+                            $merged['cards'][$playerid]['played'] += 1;
                         }
                     }
                     
@@ -173,7 +186,7 @@ function copa_organize_players_rankings_data($events, $teams){
     }
     if($merged){
         foreach($merged as &$m){
-            arsort($m);
+            usort($m, 'copa_sort_rankings');
         }
     }
     return $merged;
@@ -225,8 +238,22 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
             $output .= '</div>';
             $output .= '<div class="widget__content card__content">';
             $output .= '<div class="table-responsive">';
-            $output .= '<table class="table team-leader"><tbody>';
+            $output .= '<table class="table team-leader"><thead>';
             $k = 1;
+
+            $output .= '<tr>
+                <th class="team-leader__rank"></th>
+                <th class="team-leader__type">'.esc_html__( 'Name', 'alchemists' ).'</th>
+                <th class="team-leader__total">'.esc_html__( 'T', 'alchemists' ).'</th>
+                <th class="team-leader__gp">'.esc_html__( 'GP', 'alchemists' ).'</th>
+                <th class="team-leader__avg">'.esc_html__( 'AVG', 'alchemists' ).'</th>
+            </tr>';
+            
+            $top_team = $val1;
+            $top_team = array_shift($top_team);
+
+            $output .= '</thead><tbody>';
+
             foreach($val1 as $team_id=>$value){
                 if($k > 3){
                     break;
@@ -250,6 +277,14 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
                     <a href="'.$permalink.'">'.$team->post_title.'</a>
                 </h5></div>';
                 $output .= '</div>';
+                $output .= '</td>';
+                $output .= '<td class="team-leader__total">';
+                $output .= $value['value'];
+                $output .= '</td>';
+                $output .= '<td class="team-leader__gp">';
+                $output .= $value['played'];
+                $output .= '</td>';
+                $output .= '<td class="team-leader__avg">';
                 $output .= '</td>';
                 $output .= '</tr>';
                 $k++;
