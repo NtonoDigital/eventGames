@@ -94,7 +94,7 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams){
             }
         }
     }
-    if($return){
+    if($merged){
         foreach($merged as $key=>$m1){
             $count = 0;
             foreach($m1 as $id=>$m){
@@ -194,10 +194,11 @@ function copa_organize_players_rankings_data($events, $teams){
             }
         }
     }
-    if($return){
+    if($merged){
         foreach($merged as $key=>$m1){
             $count = 0;
-            foreach($m1 as $id=>$m){
+            foreach($m1 as $id=>$m){ // work here, $m is not an array
+                var_dump($m);
                 $return[$key][$count] = array_merge(array('id'=>$id), $m);
                 $count++;
             }
