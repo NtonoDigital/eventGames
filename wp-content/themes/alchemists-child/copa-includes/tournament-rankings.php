@@ -197,11 +197,12 @@ function copa_organize_players_rankings_data($events, $teams){
         foreach($merged as &$m){
             $k = 0;
             foreach($m as $id=>$m2){
-                $temp = $m2;
+                /*$temp = $m2;
                 $temp['id'] = $id;
                 unset($m[$id]);
                 $m[$k] = $temp;
-                $k++;
+                $k++;*/
+                var_dump($id);
             }
             usort($m, 'copa_sort_rankings');
         }
