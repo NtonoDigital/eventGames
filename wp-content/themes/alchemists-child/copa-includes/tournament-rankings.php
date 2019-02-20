@@ -96,6 +96,14 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams){
     }
     if($merged){
         foreach($merged as &$m){
+            $k = 0;
+            foreach($m as $id=>$m2){
+                $m2['id'] = $id;
+                unset($m[$id]);
+                $m[$k] = $m2;
+                $k++;
+            }
+
             usort($m, 'copa_sort_rankings');
         }
     }
@@ -186,6 +194,13 @@ function copa_organize_players_rankings_data($events, $teams){
     }
     if($merged){
         foreach($merged as &$m){
+            $k = 0;
+            foreach($m as $id=>$m2){
+                $m2['id'] = $id;
+                unset($m[$id]);
+                $m[$k] = $m2;
+                $k++;
+            }
             usort($m, 'copa_sort_rankings');
         }
     }
@@ -254,10 +269,11 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
 
             $output .= '</thead><tbody>';
 
-            foreach($val1 as $team_id=>$value){
+            foreach($val1 as $value){
                 if($k > 3){
                     break;
                 }
+                $team_id = $value['id'];
                 $team = get_post($team_id);
                 $thumbnail = '';
                 $permalink = get_permalink($team->ID);
