@@ -98,9 +98,10 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams){
         foreach($merged as &$m){
             $k = 0;
             foreach($m as $id=>$m2){
-                $m2['id'] = $id;
+                $temp = $m2;
+                $temp['id'] = $id;
                 unset($m[$id]);
-                $m[$k] = $m2;
+                $m[$k] = $temp;
                 $k++;
             }
 
@@ -196,9 +197,10 @@ function copa_organize_players_rankings_data($events, $teams){
         foreach($merged as &$m){
             $k = 0;
             foreach($m as $id=>$m2){
-                $m2['id'] = $id;
+                $temp = $m2;
+                $temp['id'] = $id;
                 unset($m[$id]);
-                $m[$k] = $m2;
+                $m[$k] = $temp;
                 $k++;
             }
             usort($m, 'copa_sort_rankings');
