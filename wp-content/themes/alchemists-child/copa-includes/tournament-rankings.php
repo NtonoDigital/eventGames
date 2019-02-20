@@ -1,14 +1,14 @@
 <?php
 
 function copa_organize_teams_rankings_data($events, $eventids, $teams){
-    $merged = array();
+    $return = $merged = array();
     if($events){
         
-        $merged['goalsgiven'] = array();
-        $merged['goalsreceived'] = array();
-        $merged['assists'] = array();
-        $merged['cards'] = array();
-        $merged['mvps'] = array();
+        $result['goalsgiven'] = $merged['goalsgiven'] = array();
+        $result['goalsreceived'] = $merged['goalsreceived'] = array();
+        $result['assists'] = $merged['assists'] = array();
+        $result['cards'] = $merged['cards'] = array();
+        $result['mvps'] = $merged['mvps'] = array();
         
         foreach($events as $e){
             
@@ -94,21 +94,19 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams){
             }
         }
     }
-    if($merged){
-        foreach($merged as &$m){
-            $k = 0;
-            foreach($m as $id=>$m2){
-                $temp = $m2;
-                $temp['id'] = $id;
-                unset($m[$id]);
-                $m[$k] = $temp;
-                $k++;
+    if($return){
+        foreach($merged as $key=>$m1){
+            $count = 0;
+            foreach($m1 as $id=>$m){
+                $return[$key][$count] = array_merge(array('id'=>$id), $m);
+                $count++;
             }
-
+        }
+        foreach($return as &$m){
             usort($m, 'copa_sort_rankings');
         }
     }
-    return $merged;
+    return $return;
 }
 function copa_sort_rankings($a, $b){
     if ($a['value'] == $b['value']) {
@@ -118,14 +116,14 @@ function copa_sort_rankings($a, $b){
 }
 
 function copa_organize_players_rankings_data($events, $teams){
-    $merged = array();
+    $return = $merged = array();
     if($events){
         
-        $merged['goalsgiven'] = array();
-        $merged['assists'] = array();
-        $merged['cards'] = array();
-        $merged['mvps'] = array();
-        $merged['saves'] = array();
+        $return['goalsgiven'] = $merged['goalsgiven'] = array();
+        $return['assists'] = $merged['assists'] = array();
+        $return['cards'] = $merged['cards'] = array();
+        $return['mvps'] = $merged['mvps'] = array();
+        $return['saves'] = $merged['saves'] = array();
         
         foreach($events as $e){
             $event = get_post($e);
@@ -153,6 +151,8 @@ function copa_organize_players_rankings_data($events, $teams){
                     $merged['mvps'][$playerid] += 1;
                 }
             }
+
+            
 
             if($players){
                 foreach($players as $team_id=>$data1){
@@ -186,6 +186,7 @@ function copa_organize_players_rankings_data($events, $teams){
                             $merged['goalsgiven'][$playerid]['played'] += 1;
                             $merged['assists'][$playerid]['played'] += 1;
                             $merged['cards'][$playerid]['played'] += 1;
+
                         }
                     }
                     
@@ -193,22 +194,19 @@ function copa_organize_players_rankings_data($events, $teams){
             }
         }
     }
-    if($merged){
-        foreach($merged as &$m){
-            $k = 0;
-            
-            foreach($m as $id=>$m2){
-                var_dump($id);
-                /*$temp = $m2;
-                $temp['id'] = $id;
-                unset($m[$id]);
-                $m[$k] = $temp;
-                $k++;*/
+    if($return){
+        foreach($merged as $key=>$m1){
+            $count = 0;
+            foreach($m1 as $id=>$m){
+                $return[$key][$count] = array_merge(array('id'=>$id), $m);
+                $count++;
             }
+        }
+        foreach($return as &$m){
             usort($m, 'copa_sort_rankings');
         }
     }
-    return $merged;
+    return $return;
 }
 
 
