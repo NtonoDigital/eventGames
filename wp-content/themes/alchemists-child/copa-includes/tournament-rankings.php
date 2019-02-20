@@ -196,8 +196,9 @@ function copa_organize_players_rankings_data($events, $teams){
     if($merged){
         foreach($merged as &$m){
             $k = 0;
-            var_dump($m);
+            
             foreach($m as $id=>$m2){
+                var_dump($id);
                 /*$temp = $m2;
                 $temp['id'] = $id;
                 unset($m[$id]);
