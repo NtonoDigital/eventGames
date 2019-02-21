@@ -22,18 +22,20 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams){
             foreach($e['teams'] as $key=>$team){
                 
                 if(!isset($merged['goalsgiven'][$team])){
-                    $merged['goalsgiven'][$team] = 0;
+                    $merged['goalsgiven'][$team] = array('played'=>0, 'value'=> 0);
                 }
                 if(!isset($merged['goalsreceived'][$team])){
-                    $merged['goalsreceived'][$team] = 0;
+                    $merged['goalsreceived'][$team] = array('played'=>0, 'value'=> 0);
                 }
-                $merged['goalsgiven'][$team] += (int)$e['results'][$key];
+                $merged['goalsgiven'][$team]['value'] += (int)$e['results'][$key];
+                $merged['goalsgiven'][$team]['played'] += 1;
                 if($key > 0){
                     $revkey = 0;
                 }else{
                     $revkey = 1;
                 }
-                $merged['goalsreceived'][$team] += (int)$e['results'][$revkey];
+                $merged['goalsreceived'][$team]['value'] += (int)$e['results'][$revkey];
+                $merged['goalsreceived'][$team]['played'] += 1;
             }
         }
         foreach($eventids as $e){
