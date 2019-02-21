@@ -148,9 +148,10 @@ function copa_organize_players_rankings_data($events, $teams){
             if($stars){
                 foreach($stars as $playerid=>$star){
                     if(!isset($merged['mvps'][$playerid])){
-                        $merged['mvps'][$playerid] = 0;
+                        $merged['mvps'][$playerid] = array('played'=>0, 'value'=> 0);
                     }
-                    $merged['mvps'][$playerid] += 1;
+                    $merged['mvps'][$playerid]['played'] += 1;
+                    $merged['mvps'][$playerid]['value'] += 1;
                 }
             }
 
