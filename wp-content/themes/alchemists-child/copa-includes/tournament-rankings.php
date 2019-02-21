@@ -263,11 +263,10 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
             $k = 1;
 
             $output .= '<tr>
-                <th class="team-leader__rank"></th>
+                <!--<th class="team-leader__rank"></th>-->
                 <th class="team-leader__type">'.esc_html__( 'Name', 'alchemists' ).'</th>
                 <th class="team-leader__total">'.esc_html__( 'T', 'alchemists' ).'</th>
                 <th class="team-leader__gp">'.esc_html__( 'GP', 'alchemists' ).'</th>
-                <th class="team-leader__avg">'.esc_html__( 'AVG', 'alchemists' ).'</th>
             </tr>';
             
             $top_team = $val1;
@@ -285,7 +284,7 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
                 $permalink = get_permalink($team->ID);
                 
                 $output .= '<tr>';
-                $output .= '<td class="rounded-col"><span>'.$k.'</span></td>';
+                // $output .= '<td class="rounded-col"><span>'.$k.'</span></td>';
                 $output .= '<td class="team-leader__player">';
                 $output .= '<div class="team-leader__player-info">';
                 if(has_post_thumbnail($team->ID)){
@@ -305,8 +304,6 @@ function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankin
                 $output .= '</td>';
                 $output .= '<td class="team-leader__gp">';
                 $output .= $value['played'];
-                $output .= '</td>';
-                $output .= '<td class="team-leader__avg">';
                 $output .= '</td>';
                 $output .= '</tr>';
                 $k++;
