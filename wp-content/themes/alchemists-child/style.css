@@ -67,9 +67,9 @@ Template: alchemists
 .copa_tournaments_filter table > tbody > tr:first-child td.rounded-col {
     z-index: 9;
 }
-.copa_tournaments_filter .team-leader .team-leader__player{
+/*.copa_tournaments_filter .team-leader .team-leader__player{
     padding-left: 0;
-}
+}*/
 .copa_tournaments_filter td.rounded-col span {
     border-radius: 50%;
     background: #ccc;
