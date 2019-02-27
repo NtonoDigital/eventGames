@@ -232,7 +232,7 @@ function copa_tournaments_final_filter($atts = array(), $content = null){
         <div class="copa_tournaments_filter_inputs">
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select name="results_sp_tournament">
+                    <select name="finals_sp_tournament">
                         <?php 
                         if(!empty($tournaments) && !is_wp_error($tournaments)){
                             foreach($tournaments as $tournament){    
@@ -242,7 +242,7 @@ function copa_tournaments_final_filter($atts = array(), $content = null){
                     </select>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select name="results_sp_season">
+                    <select name="finals_sp_season">
                         <?php foreach($tseasons as $t){?>
                         <option value="<?php echo $t->term_id?>"><?php echo $t->name?></option>
                         <?php }?>

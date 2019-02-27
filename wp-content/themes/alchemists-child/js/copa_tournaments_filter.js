@@ -83,6 +83,44 @@
                 hideLoader($this);
             });
         });
+        /* Tournaments final bracket filter */
+        $('[name="finals_sp_tournament"]').on('change', function(e){
+            var $this = $(this);
+            var data = {
+                sp_tournament: $this.children('option:selected').val(),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
+            };
+            displayLoader($this);
+            doAjax(data, function(resp){
+                var $field = $this.closest('.copa_tournaments_filter_inputs').find('[name="finals_sp_season"]');
+                var $html = '';
+                $field.children('option').remove();
+                if(resp){
+                    resp = JSON.parse(resp);
+                    $.each(resp, function(k,v){
+                        $html += '<option value="'+k+'">'+v+'</option>';
+                    });
+                    $field.append($html);
+                }
+                hideLoader($this);
+                $field.trigger('change');
+            });
+        });
+        $('[name="finals_sp_season"]').on('change', function(e){
+            var $this = $(this);
+            var data = {
+                sp_tournament: $this.closest('.copa_tournaments_filter_inputs').find('[name="finals_sp_tournament"] option:selected').val(),
+                sp_season: $this.children('option:selected').val(),
+                criteria: $this.closest('.copa_tournaments_filter').attr('data-layouttype')
+            };
+            displayLoader($this);
+            doAjax(data, function(resp){
+                var $html = '',
+                $content = $this.closest('.copa_tournaments_filter_inputs').siblings('.copa_tournaments_filter_results');
+                $content.html(resp);
+                hideLoader($this);
+            });
+        });
         /* Tournaments results filter */
         $('[name="results_sp_tournament"]').on('change', function(e){
             var $this = $(this);
