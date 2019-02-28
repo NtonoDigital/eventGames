@@ -9,16 +9,15 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams, $leagueta
     $result['mvps'] = $merged['mvps'] = array();
 
     if($leaguetable){
-        array_pop($leaguetable);
-        echo '<pre>';
-        print_r($leaguetable);
-        echo '</pre>';
-        return false;
+        foreach($leaguetable as $team=>$val){
+            $merged['goalsgiven'][$team] = array('played'=>$val['p'], 'value'=> $val['f']);
+            $merged['goalsreceived'][$team] = array('played'=>$val['p'], 'value'=> $val['a']);
+        }
     }
 
     if($events){
         
-        foreach($events as $e){
+        /*foreach($events as $e){
             
             if(
                 !in_array($e['teams'][0], $teams)
@@ -45,7 +44,7 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams, $leagueta
                 $merged['goalsreceived'][$team]['value'] += (int)$e['results'][$revkey];
                 $merged['goalsreceived'][$team]['played'] += 1;
             }
-        }
+        }*/
         foreach($eventids as $e){
             $event = get_post($e);
             
