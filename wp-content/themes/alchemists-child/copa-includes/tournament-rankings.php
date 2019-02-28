@@ -218,6 +218,13 @@ function copa_organize_players_rankings_data($events, $teams){
 
 
 function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankings'){
+    $table = new SP_League_Table( $table_id );
+    $list = $table->data();
+    echo '<pre>';
+    print_r($list);
+    echo '</pre>';
+}
+function __copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankings'){
     global $wpdb;
     $teams = $wpdb->get_col($wpdb->prepare("SELECT pm.meta_value FROM {$wpdb->postmeta} pm LEFT JOIN {$wpdb->posts} p ON pm.post_id=p.ID WHERE p.ID = %d AND pm.meta_key='sp_team' AND p.post_status='publish' AND pm.meta_value+0>0", $table_id));
     // $table = new SP_League_Table( $table_id );
