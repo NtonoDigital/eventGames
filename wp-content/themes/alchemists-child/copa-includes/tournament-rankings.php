@@ -1,14 +1,22 @@
 <?php
 
-function copa_organize_teams_rankings_data($events, $eventids, $teams){
+function copa_organize_teams_rankings_data($events, $eventids, $teams, $leaguetable){
     $return = $merged = array();
+    $result['goalsgiven'] = $merged['goalsgiven'] = array();
+    $result['goalsreceived'] = $merged['goalsreceived'] = array();
+    $result['assists'] = $merged['assists'] = array();
+    $result['cards'] = $merged['cards'] = array();
+    $result['mvps'] = $merged['mvps'] = array();
+
+    if($leaguetable){
+        array_pop($leaguetable);
+        echo '<pre>';
+        print_r($leaguetable);
+        echo '</pre>';
+        return false;
+    }
+
     if($events){
-        
-        $result['goalsgiven'] = $merged['goalsgiven'] = array();
-        $result['goalsreceived'] = $merged['goalsreceived'] = array();
-        $result['assists'] = $merged['assists'] = array();
-        $result['cards'] = $merged['cards'] = array();
-        $result['mvps'] = $merged['mvps'] = array();
         
         foreach($events as $e){
             
@@ -217,18 +225,18 @@ function copa_organize_players_rankings_data($events, $teams){
 }
 
 
-function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankings'){
+function __copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankings'){
     $table = new SP_League_Table( $table_id );
     $list = $table->data();
     echo '<pre>';
     print_r($list);
     echo '</pre>';
 }
-function __copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankings'){
+function copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rankings'){
     global $wpdb;
     $teams = $wpdb->get_col($wpdb->prepare("SELECT pm.meta_value FROM {$wpdb->postmeta} pm LEFT JOIN {$wpdb->posts} p ON pm.post_id=p.ID WHERE p.ID = %d AND pm.meta_key='sp_team' AND p.post_status='publish' AND pm.meta_value+0>0", $table_id));
-    // $table = new SP_League_Table( $table_id );
-    // $list = $table->data();
+    $table = new SP_League_Table( $table_id );
+    $list = $table->data();
     if(!$teams){
         $pre_teams = get_post_meta($table_id, 'sp_teams', true);
         if($pre_teams){
@@ -244,7 +252,7 @@ function __copa_display_tournament_teams_rankings($table_id, $mode = 'teams_rank
     }else{
         $events = get_post_meta($tournament, 'sp_events', true);
         $eventids = get_post_meta($tournament, 'sp_event');
-        $data = copa_organize_teams_rankings_data($events, $eventids, $teams);
+        $data = copa_organize_teams_rankings_data($events, $eventids, $teams, $list);
     }
     $boxestitles = array(
         'goalsgiven' => esc_html__('Goals Made', 'alchemists'),
