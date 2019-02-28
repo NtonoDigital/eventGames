@@ -8,7 +8,8 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams, $leagueta
     $result['cards'] = $merged['cards'] = array();
     $result['mvps'] = $merged['mvps'] = array();
 
-    if($leaguetable){
+    if(count($leaguetable) > 1){
+        array_pop($leaguetable);
         foreach($leaguetable as $team=>$val){
             $merged['goalsgiven'][$team] = array('played'=>$val['p'], 'value'=> $val['f']);
             $merged['goalsreceived'][$team] = array('played'=>$val['p'], 'value'=> $val['a']);
