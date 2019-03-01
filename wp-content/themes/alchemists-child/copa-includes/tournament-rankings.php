@@ -72,29 +72,28 @@ function copa_organize_teams_rankings_data($events, $eventids, $teams, $leagueta
                     if(!in_array($team_id, $teams)){
                         continue;
                     }
+                    if(!isset($merged['assists'][$team_id])){
+                        $merged['assists'][$team_id] = array('played'=>0, 'value'=> 0);
+                    }
+                    if(!isset($merged['cards'][$team_id])){
+                        $merged['cards'][$team_id] = array('played'=>0, 'value'=> 0);
+                    }
+                    if(!isset($merged['mvps'][$team_id])){
+                        $merged['mvps'][$team_id] = array('played'=>0, 'value'=> 0);
+                    }
+                    $merged['mvps'][$team_id]['played'] += 1;
+                    $merged['assists'][$team_id]['played'] += 1;
+                    $merged['cards'][$team_id]['played'] += 1;
+
                     if(count($data1) > 0){
                         foreach($data1 as $playerid => $loop){
                             if(!$playerid){ // 0 index actually having no data
                                 continue;
                             }
-                            if(!isset($merged['assists'][$team_id])){
-                                $merged['assists'][$team_id] = array('played'=>0, 'value'=> 0);
-                            }
-                            if(!isset($merged['cards'][$team_id])){
-                                $merged['cards'][$team_id] = array('played'=>0, 'value'=> 0);
-                            }
-                            if(!isset($merged['mvps'][$team_id])){
-                                $merged['mvps'][$team_id] = array('played'=>0, 'value'=> 0);
-                            }
-
                             if($stars && in_array($playerid, array_keys($stars))){          
                                 $merged['mvps'][$team_id]['value'] += 1;
-                                $merged['mvps'][$team_id]['played'] += 1;
                             }
-
                             $merged['assists'][$team_id]['value'] += (int)$loop['assists'];
-                            $merged['assists'][$team_id]['played'] += 1;
-                            $merged['cards'][$team_id]['played'] += 1;
                             $merged['cards'][$team_id]['value'] += (int)$loop['yellowcards'];
                             $merged['cards'][$team_id]['value'] += (int)$loop['redcards'];
                         }
