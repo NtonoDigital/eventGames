@@ -107,7 +107,7 @@
 							'id' => $player_id,
 							'title' => get_the_title(),
 							'positions' => get_the_terms($player_id,'sp_position')[0]->name ,
-							'image' => get_field('player_image', $player_id)['sizes']['sportspress-fit-mini'],
+							'image' => get_the_post_thumbnail_url($player_id, 'thumbnail'),
 							'mvp_metas' => $players_mvp_metas[$player_id],
 							'vmp_total' => $players_mvp[$player_id],
 
@@ -156,7 +156,7 @@
 												<aside class="card-player">
 													<div class="card-player-head"><?php echo $data['positions'] ?> <div class="star-wrap"><i class="fa fa-star"></i></div></div>
 													<div class="card-player-content">
-														<div class="card-player-img"></div>
+														<div class="card-player-img" style="background-image:url('<?php echo $data['image'] ?>')"></div>
 														<div class="card-player-desc">
 															<div class="name"><?php echo $data['title'] ?></div>
 															<ul class="player-metas">
