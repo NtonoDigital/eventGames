@@ -83,7 +83,8 @@
 
 			function get_players($players_mvp, $players_mvp_metas){
 				/* Get players */
-
+				arsort($players_mvp);
+			 
 				$players = [];
 				foreach($players_mvp as $k => $d){
 					$players[] = $k;
