@@ -71,10 +71,12 @@
     color:#f5081c;
 }
 .copamalta-mvp .card-player-content .card-player-img {
-    max-width: 8rem;
+    max-width: 10rem;
     height: 10rem;
     width: 100%;
-    background: #edeff4;
+    background: url(https://cdn.copamaltamorena.com/wp-content/uploads/2019/02/12214405/postalita-ALBERGUE-INFANTIL-Mesa-de-trabajo-1-copia-3-380x370.png);
+    background-size: cover;
+    background-position: center top;
 }
 
 .copamalta-mvp .card-player-desc {
