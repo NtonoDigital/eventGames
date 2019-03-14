@@ -106,6 +106,7 @@
 						$players_data[] = array(
 							'id' => $player_id,
 							'title' => get_the_title(),
+							'url' => get_permalink(),
 							'positions' => get_the_terms($player_id,'sp_position')[0]->name ,
 							'image' => get_the_post_thumbnail_url($player_id, 'thumbnail'),
 							'mvp_metas' => $players_mvp_metas[$player_id],
@@ -153,7 +154,7 @@
 									<div class="swiper-wrapper">
 										<?php foreach($mvp_data as $data): ?>
 											<div class="swiper-slide">
-												<aside class="card-player">
+												<a href="<?php echo $data['url'];?>" class="card-player">
 													<div class="card-player-head"><?php echo $data['positions'] ?> <div class="star-wrap"><i class="fa fa-star"></i></div></div>
 													<div class="card-player-content">
 														<div class="card-player-img" style="background-image:url('<?php echo $data['image'] ?>')"></div>
@@ -174,7 +175,7 @@
 														</div>
 
 													</div>
-												</aside>
+												</a>
 											</div>
 											<!-- end Slide -->
 										<?php endforeach; ?>
