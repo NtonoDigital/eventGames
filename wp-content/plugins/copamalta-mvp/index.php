@@ -167,7 +167,7 @@
 																	Asistencia: <strong><?php echo $data['mvp_metas']['assists'] ?></strong>
 																</li>
 																<li>
-																	Numero de MVP ganados: <strong class="mvp-num"><?php echo $data['vmp_total']?></strong>
+																	Menciones MVP: <strong class="mvp-num"><?php echo $data['vmp_total']?></strong>
 																</li>
 
 															</ul>
