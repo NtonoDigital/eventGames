@@ -93,7 +93,8 @@
 				$args = array(
 					'post_type' => 'sp_player',
 					'post__in' => $players, 
-					'posts_per_page' => -1
+					'posts_per_page' => -1,
+					'orderby' => 'post__in'
 				);
 
 				$players_query = new WP_Query($args);
@@ -116,7 +117,7 @@
 						);
 
 
-					}
+					} 
 					wp_reset_postdata($players_query);	
 				}
 
