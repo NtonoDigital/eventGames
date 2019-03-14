@@ -84,17 +84,28 @@
 			function get_players($players_mvp, $players_mvp_metas){
 				/* Get players */
 				arsort($players_mvp);
-			 
+
 				$players = [];
 				foreach($players_mvp as $k => $d){
 					$players[] = $k;
 				}
-
+				// print_r(get_terms());
+				// die;
 				$args = array(
 					'post_type' => 'sp_player',
 					'post__in' => $players, 
 					'posts_per_page' => -1,
-					'orderby' => 'post__in'
+					'orderby' => 'post__in',
+					'tax_query' => array(
+						array(
+							'taxonomy'  => 'sp_league',
+							'field'     => 'term_id',
+							'terms'     => $this->gender,
+							'operator'  => 'IN'
+
+						)
+
+					)
 				);
 
 				$players_query = new WP_Query($args);
@@ -132,6 +143,8 @@
 
 
 				$titulo = (empty($instance["titulo"])) ? 'JUGADORES MVP DEL EQUIPO': $instance["titulo"]; 
+				$this->gender = explode(',',$instance["gender"]); 
+
 				
 				/* Get MVP players by Team */
 				$mvp_data = $this->getMVP()
@@ -198,6 +211,7 @@
 				function update($new_instance, $old_instance) {
 					$instance = $old_instance; 
 					$instance["titulo"] = $new_instance["titulo"]; 
+					$instance["gender"] = $new_instance["gender"]; 
 
 					return $instance;
 				}
@@ -205,25 +219,42 @@
 
 				function form( $instance ) { 
 					$titulo = sanitize_text_field($instance['titulo']);
-
+					$gender = sanitize_text_field($instance['gender']);
+					$gender_arr = array(
+						'64,65' => __('Femenino'), '66,67' => __('Masculino')
+					);
 					?>
 					<p>
 						<label><?php _e('Título'); ?><br>
 							<input class="widefat" name="<?php echo $this->get_field_name('titulo'); ?>" type="text" value="<?php echo $titulo; ?>" />
 						</label>
 					</p>
-					<?php
+					<p>
+						<label><?php _e('Género'); ?><br>
+							<select class="widefat" name="<?php echo $this->get_field_name('gender'); ?>">
+								<?php 
+								foreach($gender_arr as $k => $data){
+									$selected = ($k == $gender) ? "selected" : "";
+									?>
+									<option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $data; ?></option>
+									<?php	
+								}
+								?>
+							</select>
+						</p>
+
+						<?php
+					}
 				}
-			}
 
-			add_action( 'widgets_init', function(){	register_widget( 'CopaMaltaMVP' ); });
-			add_action( 'widgets_init', 'copamalta_mvp' );
+				add_action( 'widgets_init', function(){	register_widget( 'CopaMaltaMVP' ); });
+				add_action( 'widgets_init', 'copamalta_mvp' );
 
-			function copamalta_mvp() {
-				register_sidebar( array(
-					'name' => __( 'MVP Sidebar'  ),
-					'id' => 'mvp-sidebar'
+				function copamalta_mvp() {
+					register_sidebar( array(
+						'name' => __( 'MVP Sidebar'  ),
+						'id' => 'mvp-sidebar'
 
-				) );
-			}
-			?>
+					) );
+				}
+				?>
