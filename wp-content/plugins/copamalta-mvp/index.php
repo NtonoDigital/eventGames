@@ -159,7 +159,7 @@
 					<header class="card__header">						
 						<h4 class="sp-table-caption"><?php echo $titulo ?></h4>
 						<?php if($mvp_data !== false): ?>
-							<div class="total">Total MVP: <strong><?php echo $this->total_mvp; ?></strong></div>
+							<div class="total"><?php _e('Total Menciones MVP:') ?> <strong><?php echo $this->total_mvp; ?></strong></div>
 						<?php endif; ?>
 					</header>
 					<?php if($mvp_data === false): ?>
