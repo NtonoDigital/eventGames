@@ -62,10 +62,9 @@
 
 								if($players_starts[$k] == 1){
 									$players_mvp[$k] += 1; 
-									$players_mvp_metas[$k]['goals'] += (int) $d['goals'];
-									$players_mvp_metas[$k]['assists'] += (int) $d['assists'];
-
 								}
+								$players_mvp_metas[$k]['goals'] += (int) $d['goals'];
+								$players_mvp_metas[$k]['assists'] += (int) $d['assists'];
 							}
 						}
 
@@ -141,7 +140,7 @@
 				extract( $args, EXTR_SKIP );
 
 				global $wp_query;
-
+				//print_r(get_option('alchemists_data')); die;
 
 				$titulo = (empty($instance["titulo"])) ? 'JUGADORES MVP DEL EQUIPO': $instance["titulo"]; 
 				$this->gender = explode(',',$instance["gender"]); 
