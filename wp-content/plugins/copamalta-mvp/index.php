@@ -112,6 +112,7 @@
 				$players_data = [];
 
 				if($players_query->have_posts()){
+					$this->total_mvp = 0;
 					while ($players_query->have_posts()) {
 						$players_query->the_post();
 						$player_id = get_the_id();
@@ -127,7 +128,7 @@
 
 						);
 
-
+						$this->total_mvp += $players_mvp[$player_id];
 					} 
 					wp_reset_postdata($players_query);	
 				}
@@ -158,7 +159,7 @@
 					<header class="card__header">						
 						<h4 class="sp-table-caption"><?php echo $titulo ?></h4>
 						<?php if($mvp_data !== false): ?>
-							<div class="total">Total MVP: <strong><?php echo count($mvp_data); ?></strong></div>
+							<div class="total">Total MVP: <strong><?php echo $this->total_mvp; ?></strong></div>
 						<?php endif; ?>
 					</header>
 					<?php if($mvp_data === false): ?>
