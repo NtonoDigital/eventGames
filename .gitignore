@@ -23,6 +23,7 @@ wp-content/plugins/hello.php
 /sitemap.xml
 /sitemap.xml.gz
 
+.DS_Store
 .ftpquota
 .htaccess-190206052502-5c5a6fae7249a-duplicator.bak
 sportspress-pro.zip
