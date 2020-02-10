@@ -137,7 +137,9 @@ foreach ( $data as $team_id => $row ):
 	if ( isset( $limit ) && $i >= $limit ) continue;
 
 	$name = sp_array_value( $row, 'name', null );
-	if ( ! $name ) continue;
+	if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
+        continue;
+    }
 
 	// Generate tags for highlighted team
 	$tr_class = $td_class = '';

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Alchemists\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-10 19:35+0100\n"
-"PO-Revision-Date: 2018-11-10 19:35+0100\n"
+"PO-Revision-Date: 2019-02-17 05:04+0600\n"
 "Last-Translator: Dan Fisher <dan.fisher85@yahoo.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;"
 "esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;"
@@ -6194,8 +6194,7 @@ msgstr ""
 #: sportspress/widgets/widget-alc-event-block.php:178
 #: sportspress/widgets/widget-alc-featured-player.php:127
 #: sportspress/widgets/widget-alc-game-result.php:192
-#: sportspress/widgets/widget-alc-game-result.php:244
-#: vc_templates/alc_post_slider.php:117
+#: sportspress/widgets/widget-alc-game-result.php:244 vc_templates/alc_post_slider.php:117
 msgid "All"
 msgstr ""
 
@@ -6426,8 +6425,7 @@ msgid "A chart displayed team points."
 msgstr ""
 
 #: inc/vc-functions.php:3038 sportspress/widgets/widget-alc-event-block.php:158
-#: sportspress/widgets/widget-alc-game-result.php:206
-#: woocommerce/checkout/thankyou.php:54
+#: sportspress/widgets/widget-alc-game-result.php:206 woocommerce/checkout/thankyou.php:54
 msgid "Date:"
 msgstr ""
 
@@ -7186,8 +7184,7 @@ msgstr "Hora"
 msgid "Match Day"
 msgstr "Día de juego"
 
-#: sportspress/event-details.php:53
-#: sportspress/event/alc-event-timeline-horizontal.php:79
+#: sportspress/event-details.php:53 sportspress/event/alc-event-timeline-horizontal.php:79
 #: sportspress/event/alc-event-timeline-vertical.php:53
 msgid "Full Time"
 msgstr "Tiempo Completo"
@@ -7286,8 +7283,7 @@ msgstr "Árbitros"
 msgid "Player of the Match"
 msgstr "Jugador del partido"
 
-#: sportspress/event-performance-table.php:115
-#: sportspress/event-performance-table.php:118
+#: sportspress/event-performance-table.php:115 sportspress/event-performance-table.php:118
 msgid "Stars"
 msgstr ""
 
@@ -8162,8 +8158,7 @@ msgstr ""
 msgid "Select a country&hellip;"
 msgstr ""
 
-#: woocommerce/cart/shipping-calculator.php:51
-#: woocommerce/cart/shipping-calculator.php:56
+#: woocommerce/cart/shipping-calculator.php:51 woocommerce/cart/shipping-calculator.php:56
 #: woocommerce/cart/shipping-calculator.php:68
 msgid "State / County"
 msgstr ""
@@ -8294,8 +8289,7 @@ msgstr ""
 msgid "This will be how your name will be displayed in the account section and in reviews"
 msgstr ""
 
-#: woocommerce/myaccount/form-edit-account.php:43
-#: woocommerce/myaccount/form-login.php:105
+#: woocommerce/myaccount/form-edit-account.php:43 woocommerce/myaccount/form-login.php:105
 msgid "Email address"
 msgstr ""
 
@@ -8513,11 +8507,13 @@ msgstr ""
 msgid "verified owner"
 msgstr ""
 
-#: woocommerce/single-product/tabs/tabs.php:49
-#: woocommerce/single-product/tabs/tabs.php:93
+#: woocommerce/single-product/tabs/tabs.php:49 woocommerce/single-product/tabs/tabs.php:93
 msgctxt "single product: subtitle"
 msgid "Product"
 msgstr ""
+
+msgid "Search Players"
+msgstr "Buscar Jugador"
 
 #~ msgid "Game Recap"
 #~ msgstr "Resumen del partido"

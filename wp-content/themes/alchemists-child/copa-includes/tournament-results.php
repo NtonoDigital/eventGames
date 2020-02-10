@@ -36,77 +36,103 @@ $output .= '<div class="card__content">';
 
 $output .= '<div class="table-responsive sp-table-wrapper">';
 
-$output .= '<table class="table table-hover table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' . $identifier : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
+$output .= '<table class="table table-hover team-schedule table-standings sp-league-table sp-data-table' . ( $responsive ? ' sp-responsive-table ' : '' ). ( $scrollable ? ' sp-scrollable-table' : '' ) . ( $paginated ? ' sp-paginated-table' : '' ) . '" data-sp-rows="' . $rows . '">' . '<thead>' . '<tr>';
 
-$output .= '<th>'.esc_html__('Match Day', 'alchemists').'</th>';
+$output .= '<th>'.esc_html__('Date', 'alchemists').'</th>';
 $output .= '<th>'.esc_html__('Event', 'alchemists').'</th>';
-$output .= '<th>'.esc_html__('Result', 'alchemists').'</th>';
+$output .= '<th>'.esc_html__('Results', 'alchemists').'</th>';
 $output .= '<th>'.esc_html__('League', 'alchemists').'</th>';
 $output .= '</tr></thead><tbody>';
 
 $the_tournament = get_post($sp_tournament);
 
 foreach($results as $result){
+    
+    $event = get_post((int)$result->meta_value);
 
-    $output .= '<tr>';
+    if(!$event){
+        continue;
+    }
 
     $table = new SP_Event((int)$result->meta_value);
-
     $data = $table->results();
-
-    $match_date = $table->day();
-
-    $output .= '<td class="data-day" data-label="'.esc_attr__('Match Day', 'alchemists').'">';
-    $output .= $match_date;
-    $output .= '</td>';
-
-    $counter = 0;
-
-    $output .= '<td class="data-event" data-label="'.esc_attr__('Event', 'alchemists').'">';
-
     $all_goals = array();
+    $counter = 0;
+    $goalscol = '';
 
     foreach($data as $teamid=>$stat){
         
-        if($counter > 1){
+        if(!$teamid){
             continue;
         }
 
         $team = get_post((int)$teamid);
         
-        if(!is_numeric($stat['firsthalf'])){
-            $stat['firsthalf'] = 0;
+        if(!$team){
+            continue;
         }
-        if(!is_numeric($stat['secondhalf'])){
-            $stat['secondhalf'] = 0;
-        }
-        $all_goals[] = $goals = (int)$stat['firsthalf']+(int)$stat['secondhalf'];
-        
+
         $name = $team->post_title;
+
+        if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
+            continue;
+        }
+        
+        if(!isset($stat['goals'])){
+            continue;
+        }
+        if(!is_numeric($stat['goals'])){
+            $stat['goals'] = 0;
+        }
+        
+        $all_goals[] = $goals = (int)$stat['goals'];
+        
         $logo = '';
         if ( has_post_thumbnail( $team->ID ) ){
 			$logo = get_the_post_thumbnail( $team->ID, 'sportspress-fit-icon' );
         }
         if($counter == 0){
-            $output .= '<span class="team-title">'.$name.'</span>&nbsp;&nbsp;';
+            $goalscol .= '<span class="team-title">'.$name.'</span>&nbsp;&nbsp;';
             if($logo){
-                $output .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
+                $goalscol .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
             }
-            $output .= '<span class="team-goals">'.$goals.'</span>';
-            $output .= '-';
+            $goalscol .= '<span class="team-goals">'.$goals.'</span>';
+            $goalscol .= '-';
         }else{
-            $output .= '<span class="team-goals">'.$goals.'</span>&nbsp;&nbsp;';
+            $goalscol .= '<span class="team-goals">'.$goals.'</span>&nbsp;&nbsp;';
             if($logo){
-                $output .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
+                $goalscol .= '<span class="team-logo">'.$logo.'</span>&nbsp;&nbsp;';
             }
-            $output .= '<span class="team-title">'.$name.'</span>';
+            $goalscol .= '<span class="team-title">'.$name.'</span>';
         }
 
         $counter++;
     }
+
+    if(!$goalscol){
+        continue;
+    }
+
+    $match_date = $table->day();
+
+    if(!$match_date){
+
+        $match_date = apply_filters( 'sportspress_event_date', get_post_time( get_option( 'date_format' ), false, $event, true ), $event->ID );
+
+    }
+    $match_date = '<a href="'.get_permalink($event->ID).'" itemprop="url">'.$match_date.'</a>';
+
+    $output .= '<tr>';
+
+    $output .= '<td class="date-date" data-label="'.esc_attr__('Date', 'alchemists').'">';
+    $output .= $match_date;
     $output .= '</td>';
 
-    $output .= '<td class="data-result" data-label="'.esc_attr__('Result', 'alchemists').'">';
+    $output .= '<td class="data-event" data-label="'.esc_attr__('Event', 'alchemists').'">';
+    $output .= $goalscol;
+    $output .= '</td>';
+
+    $output .= '<td class="data-result" data-label="'.esc_attr__('Results', 'alchemists').'">';
     $output .= implode(' - ', $all_goals);
     $output .= '</td>';
     

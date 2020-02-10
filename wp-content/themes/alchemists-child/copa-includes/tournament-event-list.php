@@ -203,6 +203,10 @@ $identifier = uniqid( 'eventlist_' );
 					foreach ( $data as $event ):
 						$event = get_post((int)$event->meta_value);
 
+						if(!$event){
+							continue;
+						}
+						
 						if ( isset( $limit ) && $i >= $limit ) continue;
 
 						$teams = get_post_meta( $event->ID, 'sp_team' );
@@ -217,8 +221,18 @@ $identifier = uniqid( 'eventlist_' );
 						$team_logos = array();
 
 						if ( $teams ):
+							
 							foreach ( $teams as $t => $team ):
 								$name = sp_team_short_name( $team );
+								
+								if(!$name || in_array(strtolower($name), array('equipo', 'equipos', 'no equipo'))){
+									continue;
+								}
+								
+								if($t > 1){
+									break;
+								}
+								
 								if ( $name ):
 
 									$name = '<meta itemprop="name" content="' . $name . '">' . $name;
@@ -257,8 +271,12 @@ $identifier = uniqid( 'eventlist_' );
 								endif;
 							endforeach;
 						else:
-							$teams_output .= '&mdash;';
+							// $teams_output .= '&mdash;';
 						endif;
+
+						if(!$teams_output){
+							continue;
+						}
 
 						echo '<tr class="sp-row sp-post' . ( $i % 2 == 0 ? ' alternate' : '' ) . ' sp-row-no-' . $i . '" itemscope itemtype="http://schema.org/SportsEvent">';
 
